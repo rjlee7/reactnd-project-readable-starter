@@ -5,13 +5,14 @@ export const REMOVE_FROM_CALENDAR = 'REMOVE_FROM_CALENDAR'
 
 export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES'
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'
-export const ADD_POST = 'ADD_POST'
-export const UPDATE_POST = 'UPDATE_POST'
-export const DELETE_POST = 'DELETE_POST'
+export const RECEIVE_POST = 'RECEIVE_POST'
 export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS'
+export const ADD_POST = 'ADD_POST'
 export const ADD_COMMENT = 'ADD_COMMENT'
-export const VOTE_COMMENT = 'VOTE_COMMENT'
+export const UPDATE_POST = 'UPDATE_POST'
 export const UPDATE_COMMENT = 'UPDATE_COMMENT'
+export const VOTE_COMMENT = 'VOTE_COMMENT'
+export const DELETE_POST = 'DELETE_POST'
 export const DELETE_COMMENT = 'DELETE_COMMENT'
 
 export function addRecipe ({ day, recipe, meal }) {
@@ -45,7 +46,7 @@ export const receiveCategoriesAsync = () => dispatch => (
 
 export function receivePost ({ post }) {
   return {
-    type: RECEIVE_CATEGORIES,
+    type: RECEIVE_POST,
     post
   }
 }
@@ -53,7 +54,7 @@ export function receivePost ({ post }) {
 export const receivePostAsync = (category, post_id) => dispatch => (
   APIUtil
     .getPostForCategory(category, post_id)
-    .then(post => dispatch(receiveCategories(post)))
+    .then(post => dispatch(receivePost(post)))
 )
 
 export function receivePostsForCategory (posts = []) {

@@ -73,14 +73,14 @@ export const getComment = (id) =>
   fetch(`${api}/comments/${id}`, { headers })
     .then(res => res.json())
 
-export const voteComment = (id, upVote, downVote) =>
+export const voteComment = (id, vote) =>
   fetch(`${api}/comments/${id}`, {
     method: 'POST',
     headers: {
       ...headers,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ upVote, downVote })
+    body: JSON.stringify({ vote })
   }).then(res => res.json())
 
 export const updateComment = (id, timestamp, body) =>
