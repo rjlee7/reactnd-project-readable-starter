@@ -4,13 +4,15 @@ import {
   RECEIVE_POSTS,
   RECEIVE_CATEGORIES,
   RECEIVE_COMMENTS,
-  UPDATE_POST
+  UPDATE_POST,
+  RECEIVE_POST
 } from '../actions'
 
 const initialForumState = {
   posts: [],
   categories: [],
-  comments: []
+  comments: [],
+  post: null
 }
 
 function forum (state = initialForumState, action) {
@@ -33,6 +35,11 @@ function forum (state = initialForumState, action) {
         comments
       }
     case UPDATE_POST :
+      return {
+        ...state,
+        post
+      }
+    case RECEIVE_POST :
       return {
         ...state,
         post

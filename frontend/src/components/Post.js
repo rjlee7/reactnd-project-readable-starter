@@ -1,33 +1,38 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Route } from 'react-router-dom'
-import { receiveCategoriesAsync, receivePostsAsync, receivePostAsync } from '../actions'
-import { capitalize, formatDate } from '../utils/helpers'
-import Modal from 'react-modal'
+import { Link } from 'react-router-dom'
+import { receivePostAsync } from '../actions'
+import { formatDate } from '../utils/helpers'
 import Loading from 'react-loading'
 
 class Post extends Component {
   state = {
-    loadingPost: false,
-    categories: null
   }
 
   componentDidMount() {
-    console.log('this.props',this.props)
-  }
-  getPostDetails = (category, id) => {
-    this.props.dispatch(receivePostAsync(category, id))
+    let id = this.props.match.params.id
+    this.props.dispatch(receivePostAsync(id))
   }
 
   render() {
-    const { loadingPost } = this.state
-    const { categories, posts } = this.props.forum
+    const { post } = this.props.forum
 
     return (
       <div className='container'>
 
-        <div className='forum'>
-          <div>id</div>
+        <div className='post'>
+          {post &&
+          <ul>
+            <li>{post.voteScore}</li>
+            <li>{post.category}</li>
+            <li>{post.title}</li>
+            <li>{post.author}</li>
+            <li>{formatDate(post.timestamp)}</li>
+          </ul>
+          }
+          <div>Delete</div>
+          <div>Edit</div>
+          <div>Comments</div>
         </div>
 
       </div>

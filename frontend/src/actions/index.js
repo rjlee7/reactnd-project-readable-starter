@@ -1,8 +1,5 @@
 import * as APIUtil from '../utils/api'
 
-export const ADD_RECIPE = 'ADD_RECIPE'
-export const REMOVE_FROM_CALENDAR = 'REMOVE_FROM_CALENDAR'
-
 export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES'
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'
 export const RECEIVE_POST = 'RECEIVE_POST'
@@ -15,22 +12,6 @@ export const VOTE_COMMENT = 'VOTE_COMMENT'
 export const DELETE_POST = 'DELETE_POST'
 export const DELETE_COMMENT = 'DELETE_COMMENT'
 
-export function addRecipe ({ day, recipe, meal }) {
-  return {
-    type: ADD_RECIPE,
-    recipe,
-    day,
-    meal,
-  }
-}
-
-export function removeFromCalendar ({ day, meal }) {
-  return {
-    type: REMOVE_FROM_CALENDAR,
-    day,
-    meal,
-  }
-}
 export function receiveCategories (categories = []) {
   return {
     type: RECEIVE_CATEGORIES,
@@ -44,14 +25,21 @@ export const receiveCategoriesAsync = () => dispatch => (
     .then(categories => dispatch(receiveCategories(categories.categories)))
 )
 
-export function receivePost ({ post }) {
+export function receivePost (post) {
   return {
     type: RECEIVE_POST,
     post
   }
 }
+export const receivePostAsync = (post_id) => dispatch => (
+  APIUtil
+    .getPost(post_id)
+    .then(post => {
+      dispatch(receivePost(post))
+    })
+)
 
-export const receivePostAsync = (category, post_id) => dispatch => (
+export const receivePostForCategoryAsync = (category, post_id) => dispatch => (
   APIUtil
     .getPostForCategory(category, post_id)
     .then(post => dispatch(receivePost(post)))
@@ -83,7 +71,7 @@ export const receivePostsAsync = () => dispatch => (
     .then(posts => dispatch(receivePosts(posts)))
 )
 
-export function addPost ({ post }) {
+export function addPost (post) {
   return {
     type: ADD_POST,
     post
@@ -93,10 +81,10 @@ export function addPost ({ post }) {
 export const addPostAsync = (id, timestamp, title, body, author, category) => dispatch => (
   APIUtil
     .addPost(id, timestamp, title, body, author, category)
-    .then(post => dispatch(addPost({ post })))
+    .then(post => dispatch(addPost(post)))
 )
 
-export function updatePost ({ post }) {
+export function updatePost (post) {
   return {
     type: UPDATE_POST,
     post
@@ -106,10 +94,10 @@ export function updatePost ({ post }) {
 export const updatePostAsync = (id, title, body) => dispatch => (
   APIUtil
     .updatePost(id, title, body)
-    .then(post => dispatch(updatePost({ post })))
+    .then(post => dispatch(updatePost(post)))
 )
 
-export function deletePost ({ post }) {
+export function deletePost (post) {
   return {
     type: DELETE_POST,
     post
@@ -119,7 +107,7 @@ export function deletePost ({ post }) {
 export const deletePostAsync = (id) => dispatch => (
   APIUtil
     .deletePost(id)
-    .then(post => dispatch(deletePost({ post })))
+    .then(post => dispatch(deletePost(post)))
 )
 
 export function receiveComments (comments = []) {
@@ -135,7 +123,7 @@ export const receiveCommentsAsync = (post_id) => dispatch => (
     .then(comments => dispatch(receiveComments(comments)))
 )
 
-export function addComment ({ comment }) {
+export function addComment (comment) {
   return {
     type: ADD_COMMENT,
     comment
@@ -145,10 +133,10 @@ export function addComment ({ comment }) {
 export const addCommentAsync = (id, timestamp, body, author, parentId) => dispatch => (
   APIUtil
     .addComment(id, timestamp, body, author, parentId)
-    .then(comment => dispatch(addComment({ comment })))
+    .then(comment => dispatch(addComment(comment)))
 )
 
-export function voteComment ({ comment }) {
+export function voteComment (comment) {
   return {
     type: VOTE_COMMENT,
     comment
@@ -158,10 +146,10 @@ export function voteComment ({ comment }) {
 export const voteCommentAsync = (id, upVote, downVote) => dispatch => (
   APIUtil
     .voteComment(id, upVote, downVote)
-    .then(comment => dispatch(voteComment({ comment })))
+    .then(comment => dispatch(voteComment(comment)))
 )
 
-export function updateComment ({ comment }) {
+export function updateComment (comment) {
   return {
     type: UPDATE_COMMENT,
     comment
@@ -171,10 +159,10 @@ export function updateComment ({ comment }) {
 export const updateCommentAsync = (id, timestamp, body) => dispatch => (
   APIUtil
     .updateComment(id, timestamp, body)
-    .then(comment => dispatch(updateComment({ comment })))
+    .then(comment => dispatch(updateComment(comment)))
 )
 
-export function deleteComment ({ comment }) {
+export function deleteComment (comment) {
   return {
     type: DELETE_COMMENT,
     comment
@@ -184,5 +172,5 @@ export function deleteComment ({ comment }) {
 export const deleteCommentAsync = (id) => dispatch => (
   APIUtil
     .deleteComment(id)
-    .then(comment => dispatch(deleteComment({ comment })))
+    .then(comment => dispatch(deleteComment(comment)))
 )
