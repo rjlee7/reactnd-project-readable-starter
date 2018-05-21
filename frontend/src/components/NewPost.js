@@ -1,13 +1,25 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
-export default function NewPost ({ list }) {
-  return (
-    <div className='ingredients-list'>
-      <h3 className='subheader'>
-        New Post
-      </h3>
-      <ul>
-      </ul>
-    </div>
-  )
+class NewPost extends Component {
+  componentDidMount() {
+  }
+
+  render() {
+    return (
+      <div>NEW POST</div>
+    )
+  }
 }
+//
+// function mapStateToProps ({ forum }) {
+//   return {
+//     forum
+//   }
+// }
+//
+// export default connect(
+//   mapStateToProps,
+// )(NewPost)
+export default NewPost

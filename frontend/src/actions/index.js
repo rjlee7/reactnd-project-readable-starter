@@ -120,7 +120,9 @@ export function receiveComments (comments = []) {
 export const receiveCommentsAsync = (post_id) => dispatch => (
   APIUtil
     .getCommentsForPost(post_id)
-    .then(comments => dispatch(receiveComments(comments)))
+    .then(comments => {
+      dispatch(receiveComments(comments))
+    })
 )
 
 export function addComment (comment) {
