@@ -6,7 +6,8 @@ import { formatDate } from '../utils/helpers'
 import FaChevronUp from 'react-icons/lib/fa/chevron-up'
 import FaChevronDown from 'react-icons/lib/fa/chevron-down'
 import Modal from 'react-modal'
-import NewPost from './NewPost'
+import NewPostView from '../components/NewPostView'
+import PostView from '../components/PostView'
 
 class Main extends Component {
   state = {
@@ -31,19 +32,7 @@ class Main extends Component {
           <table className='forum-table'>
             <tbody>
               {posts.map((post) => (
-                <tr key={post.id}>
-                  <td><FaChevronUp /><FaChevronDown /></td>
-                  <td>{post.voteScore}</td>
-                  <td>{post.category}</td>
-                  <td><Link to={{
-                    pathname: `/post/${post.id}`,
-                    state: {
-                      category: post.category
-                    }
-                  }}>{post.title}</Link></td>
-                  <td>{post.author}</td>
-                  <td>{formatDate(post.timestamp)}</td>
-                </tr>
+                <PostView key={post.id} post={post}/>
               ))}
             </tbody>
           </table>
@@ -56,7 +45,7 @@ class Main extends Component {
         onRequestClose={this.newPostModal}
         contentLabel='Modal'
       >
-        {newPostModalOpen && <NewPost list={this.generateNewPost()}/>}
+        {newPostModalOpen && <NewPostView list={this.generateNewPost()}/>}
       </Modal>
 </div>
     )

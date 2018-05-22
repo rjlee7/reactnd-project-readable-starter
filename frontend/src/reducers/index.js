@@ -35,10 +35,10 @@ function forum (state = initialForumState, action) {
         comments
       }
     case UPDATE_POST :
-      return {
-        ...state,
-        post
-      }
+      return state.posts.map(currentPost => {
+        (post.id === post.id)
+          ? {...post} : currentPost
+      })
     case RECEIVE_POST :
       return {
         ...state,

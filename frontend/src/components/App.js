@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { Route, Link } from 'react-router-dom'
-import Main from './Main'
-import Categories from './Categories'
-import Category from './Category'
-import Post from './Post'
-import NewPost from './NewPost'
+import Main from '../containers/Main'
+import Categories from '../containers/Categories'
+import Category from '../containers/Category'
+import Post from '../containers/Post'
+import NewPostView from './NewPostView'
 import Modal from 'react-modal'
 
 class App extends Component {
@@ -49,7 +49,6 @@ class App extends Component {
           )}/>
           <Route path={`/category/:id`} render={(props) => (
             <div>
-              <Categories {...props}/>
               <Category {...props}/>
             </div>
           )}/>
@@ -69,7 +68,7 @@ class App extends Component {
           contentLabel='Modal'
           ariaHideApp={false}
         >
-          {newPostModalOpen && <NewPost/>}
+          {newPostModalOpen && <NewPostView/>}
         </Modal>
 
       </div>

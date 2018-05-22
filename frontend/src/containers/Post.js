@@ -1,11 +1,20 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { receivePostAsync, receiveCommentsAsync, deletePostAsync, deleteCommentAsync, updateCommentAsync } from '../actions'
+import {
+  receivePostAsync,
+  receiveCommentsAsync,
+  deletePostAsync,
+  deleteCommentAsync,
+  updateCommentAsync,
+  voteCommentAsync
+} from '../actions'
 import { formatDate } from '../utils/helpers'
 import FaChevronUp from 'react-icons/lib/fa/chevron-up'
 import FaChevronDown from 'react-icons/lib/fa/chevron-down'
 import Loading from 'react-loading'
+import CommentView from '../components/CommentView'
+import PostView from '../components/PostView'
 
 class Post extends Component {
   state = {
@@ -35,9 +44,15 @@ class Post extends Component {
     this.props.dispatch(updateCommentAsync(id))
   }
 
+  voteComment(id) {
+    this.props.dispatch(voteCommentAsync(id))
+  }
+
   render() {
     const { post } = this.props.forum
     const { comments } = this.props.forum
+
+    console.log('post',post,'comments',comments)
     return (
       <div className='container'>
 
@@ -45,25 +60,20 @@ class Post extends Component {
         <button onClick={this.editPost}>Edit</button>
         <div className='post'>
           {post &&
-          <ul>
-            <li>{post.voteScore}</li>
-            <li>{post.category}</li>
-            <li>{post.title}</li>
-            <li>{post.author}</li>
-            <li>{formatDate(post.timestamp)}</li>
-          </ul>
+          <table>
+            <tbody>
+              <PostView key={post.id} post={post}/>
+            </tbody>
+          </table>
           }
           {(comments && comments.length) &&
             comments.map((comment) => (
-              <ul key={comment.id}>
-                <li><FaChevronUp /><FaChevronDown /></li>
-                <li>{comment.voteScore}</li>
-                <li>{comment.body}</li>
-                <li>{comment.author}</li>
-                <li>{formatDate(comment.timestamp)}</li>
-                <li><button onClick={() => this.deleteComment(comment.id)}>Delete</button></li>
-                <li><button onClick={() => this.editComment(comment.id)}>Edit</button></li>
-              </ul>
+              <CommentView
+                key={comment.id}
+                comment={comment}
+                deleteComment={this.deleteComment}
+                editComment={this.editComment}
+                voteComment={this.voteComment}/>
             ))
           }
         </div>
