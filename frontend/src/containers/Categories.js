@@ -14,7 +14,7 @@ class Categories extends Component {
       <ul className='forum-categories'>
         {categories.map((category) => (
           <li key={category.name} className='subheader'>
-            <Link to={`/category/${category.path}`}>{category.name}</Link>
+            <Link to={`/${category.path}`}>{category.name}</Link>
           </li>
         ))}
       </ul>

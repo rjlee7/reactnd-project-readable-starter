@@ -44,15 +44,13 @@ class App extends Component {
               <Main {...props}/>
             </div>
           )}/>
-          <Route path='/category' render={(props) => (
-            <Categories {...props}/>
-          )}/>
-          <Route path={`/category/:id`} render={(props) => (
+          <Route exact path={`/:category`} render={(props) => (
             <div>
+              <Categories {...props}/>
               <Category {...props}/>
             </div>
           )}/>
-          <Route path={`/post/:id`} render={(props) => (
+          <Route exact path={`/:category/:post_id`} render={(props) => (
             <div>
               <Categories {...props}/>
               <Post {...props}/>

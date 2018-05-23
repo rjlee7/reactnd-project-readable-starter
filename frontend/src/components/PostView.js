@@ -22,7 +22,7 @@ class PostView extends Component {
         <td>{post.voteScore}</td>
         <td>{post.category}</td>
         <td><Link to={{
-          pathname: `/post/${post.id}`,
+          pathname: `/${post.category}/${post.id}`,
           state: {
             category: post.category
           }

@@ -21,19 +21,19 @@ class Post extends Component {
   }
 
   componentDidMount() {
-    let id = this.props.match.params.id
-    this.props.dispatch(receivePostAsync(id))
-    this.props.dispatch(receiveCommentsAsync(id))
+    let post_id = this.props.match.params.post_id
+    this.props.dispatch(receivePostAsync(post_id))
+    this.props.dispatch(receiveCommentsAsync(post_id))
   }
 
   deletePost() {
-    let id = this.props.match.params.id
-    this.props.dispatch(deletePostAsync(id))
+    let post_id = this.props.match.params.post_id
+    this.props.dispatch(deletePostAsync(post_id))
   }
 
   editPost() {
-    let id = this.props.match.params.id
-    // this.props.dispatch(deletePostAsync(id))
+    let post_id = this.props.match.params.post_id
+    // this.props.dispatch(deletePostAsync(post_id))
   }
 
   deleteComment(id) {

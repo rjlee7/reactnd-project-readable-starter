@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-class NewPostView extends Component {
+class EditPostView extends Component {
   state = {
     author: '',
     title: '',
@@ -21,7 +21,7 @@ class NewPostView extends Component {
   handleChange(event) {
     this.setState({value: event.target.value});
   }
-  
+
   onChange() {
 
   }
@@ -58,4 +58,4 @@ class NewPostView extends Component {
   }
 }
 
-export default NewPostView
+export default EditPostView

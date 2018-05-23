@@ -9,28 +9,29 @@ import PostView from '../components/PostView'
 
 class Category extends Component {
   componentDidMount() {
-    console.log('this.props.match.params',this.props.match.params)
-    let id = this.props.match.params.id;
-    this.props.dispatch(receivePostsForCategoryAsync(id))
+    let category = this.props.match.params.category;
+    this.props.dispatch(receivePostsForCategoryAsync(category))
   }
 
   componentDidUpdate(prevProps) {
-    let id = this.props.match.params.id;
-    if (id !== prevProps.match.params.id) {
-      this.props.dispatch(receivePostsForCategoryAsync(id))
+    let category = this.props.match.params.category;
+    if (category !== prevProps.match.params.category) {
+      this.props.dispatch(receivePostsForCategoryAsync(category))
     }
   }
 
   render() {
     const { posts } = this.props.forum
     return (
-      <table className='forum-table'>
-        <tbody>
-          {posts.map((post) => (
-            <PostView key={post.id} post={post}/>
-          ))}
-        </tbody>
-      </table>
+      posts && posts.length ? (
+        <table className='forum-table'>
+          <tbody>
+            {posts.map((post) => (
+              <PostView key={post.id} post={post}/>
+            ))}
+          </tbody>
+        </table>
+      ) : 'No posts for this category.'
 
     )
   }
