@@ -40,52 +40,68 @@ function forum (state = initialForumState, action) {
         comments
       }
     case UPDATE_POST :
-      return state.posts.map(currentPost => {
-        (post.id === post.id)
-          ? {...post} : currentPost
-      })
+      return {
+        ...state,
+        posts: state.posts.map(currentPost => {
+          return (currentPost.id === post.id) ? post : currentPost
+        })
+      }
     case RECEIVE_POST :
       return {
         ...state,
         post
       }
     case ADD_POST :
-      return state.posts.concat([...post])
+      return {
+        ...state,
+        posts: state.posts.concat([...post])
+      }
     case DELETE_POST :
-      return state.posts.map(currentPost => {
-        (post.id === post.id)
-          ? null : currentPost
-      })
+      return {
+        ...state,
+        posts: state.posts.filter(currentPost=>{
+          return currentPost.id !== post.id
+        })
+      }
     case SORT_POSTS_BY_NAME :
-      return {...state}.posts.sort(function(a, b) {
-        let nameA = a.name.toLowerCase(),
-          nameB = b.name.toLowerCase()
-        if (nameA < nameB)
-          return -1
-        if (nameA > nameB)
-          return 1
-        return 0
+      return {
+        ...state,
+        posts: state.posts.sort((a, b) => {
+          let nameA = a.author.toLowerCase(),
+            nameB = b.author.toLowerCase()
+          if (nameA < nameB)
+            return -1
+          if (nameA > nameB)
+            return 1
+          return 0
       })
+    }
     case SORT_POSTS_BY_DATE :
-      return {...state}.posts.sort(function(a, b) {
-        let timestampA = a.timestamp,
-          timestampB = b.timestamp
-        if (timestampA < timestampB)
+      return {
+        ...state,
+        posts: state.posts.sort((a, b) => {
+          let timestampA = a.timestamp,
+            timestampB = b.timestamp
+          if (timestampA < timestampB)
+            return -1
+          if (timestampA > timestampB)
+            return 1
+          return 0
+      })
+    }
+    case SORT_POSTS_BY_VOTE :
+    return {
+      ...state,
+      posts: state.posts.sort((a, b) => {
+        let voteA = a.voteScore,
+          voteB = b.voteScore
+        if (voteA < voteB)
           return -1
-        if (timestampA > timestampB)
+        if (voteA > voteB)
           return 1
         return 0
       })
-    case SORT_POSTS_BY_VOTE :
-    return {...state}.posts.sort(function(a, b) {
-      let voteA = a.voteCount,
-        voteB = b.voteCount
-      if (voteA < voteB)
-        return -1
-      if (voteA > voteB)
-        return 1
-      return 0
-    })
+    }
     default :
       return state
   }
