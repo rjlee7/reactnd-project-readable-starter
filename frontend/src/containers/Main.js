@@ -8,6 +8,12 @@ import FaChevronDown from 'react-icons/lib/fa/chevron-down'
 import Modal from 'react-modal'
 import NewPostView from '../components/NewPostView'
 import PostView from '../components/PostView'
+import {
+  receivePostsForCategoryAsync,
+  sortPostsByName,
+  sortPostsByDate,
+  sortPostsByVote
+} from '../actions'
 
 class Main extends Component {
   state = {
@@ -30,6 +36,15 @@ class Main extends Component {
 
         <div className='forum'>
           <table className='forum-table'>
+            <thead>
+              <tr>
+                <th onClick={()=>{this.props.dispatch(sortPostsByVote())}}>vote score</th>
+                <th>category</th>
+                <th>title</th>
+                <th onClick={()=>{this.props.dispatch(sortPostsByName())}}>author</th>
+                <th onClick={()=>{this.props.dispatch(sortPostsByDate())}}>date</th>
+              </tr>
+            </thead>
             <tbody>
               {posts.map((post) => (
                 <PostView key={post.id} post={post}/>

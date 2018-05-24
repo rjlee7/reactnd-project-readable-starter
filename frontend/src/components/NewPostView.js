@@ -1,29 +1,35 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { addPostAsync } from '../actions'
 
 class NewPostView extends Component {
-  state = {
-    author: '',
-    title: '',
-    body: '',
-    category: ''
-  };
+  constructor(props) {
+      super(props);
 
-  componentDidMount() {
+      this.state = {
+        author: '',
+        title: '',
+        body: '',
+        category: '',
+        timestamp: (new Date()).getTime()
+      };
+
+      this.handleChange = this.handleChange.bind(this);
+      this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit(event) {
-    alert('Post was submitted: ' + this.state.value);
     event.preventDefault();
+    const {title,body,author,category,timestamp} = this.state;
+    this.props.dispatch(addPostAsync(timestamp, title, body, author, category))
   }
 
   handleChange(event) {
-    this.setState({value: event.target.value});
-  }
-  
-  onChange() {
-
+    console.log('this',this)
+    const {name, value} = event.target
+    console.log('name',name,'value',value)
+    this.setState({[name]: value});
   }
 
   render() {
@@ -32,19 +38,19 @@ class NewPostView extends Component {
       <form onSubmit={this.handleSubmit}>
         <label>
           Author:
-          <input type="text" value={this.state.author} onChange={this.handleChange} />
+          <input type="text" name="author" onChange={this.handleChange} />
         </label>
         <label>
           Title:
-          <input type="text" value={this.state.title} onChange={this.handleChange} />
+          <input type="text" name="title" onChange={this.handleChange} />
         </label>
         <label>
           Body:
-          <input type="text" value={this.state.body} onChange={this.handleChange} />
+          <input type="text" name="body" onChange={this.handleChange} />
         </label>
         <label>
           Category:
-          <select onChange={this.onChange} value={this.state.category}>
+          <select name="category" onChange={this.handleChange}>
             {options.map(option => (
               <option value={option} key={option}>
                 {option}

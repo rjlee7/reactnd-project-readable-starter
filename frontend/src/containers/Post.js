@@ -9,6 +9,12 @@ import {
   updateCommentAsync,
   voteCommentAsync
 } from '../actions'
+import {
+  receivePostsForCategoryAsync,
+  sortPostsByName,
+  sortPostsByDate,
+  sortPostsByVote
+} from '../actions'
 import { formatDate } from '../utils/helpers'
 import FaChevronUp from 'react-icons/lib/fa/chevron-up'
 import FaChevronDown from 'react-icons/lib/fa/chevron-down'
@@ -61,6 +67,15 @@ class Post extends Component {
         <div className='post'>
           {post &&
           <table>
+            <thead>
+              <tr>
+                <th onClick={()=>{this.props.dispatch(sortPostsByVote())}}>vote score</th>
+                <th>category</th>
+                <th>title</th>
+                <th onClick={()=>{this.props.dispatch(sortPostsByName())}}>author</th>
+                <th onClick={()=>{this.props.dispatch(sortPostsByDate())}}>date</th>
+              </tr>
+            </thead>
             <tbody>
               <PostView key={post.id} post={post}/>
             </tbody>

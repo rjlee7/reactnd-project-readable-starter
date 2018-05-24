@@ -11,6 +11,31 @@ export const UPDATE_COMMENT = 'UPDATE_COMMENT'
 export const VOTE_COMMENT = 'VOTE_COMMENT'
 export const DELETE_POST = 'DELETE_POST'
 export const DELETE_COMMENT = 'DELETE_COMMENT'
+export const SORT_POSTS_BY_NAME = 'SORT_POSTS_BY_NAME'
+export const SORT_POSTS_BY_DATE = 'SORT_POSTS_BY_DATE'
+export const SORT_POSTS_BY_VOTE = 'SORT_POSTS_BY_VOTE'
+
+export function sortPostsByName (posts = []) {
+  return {
+    type: SORT_POSTS_BY_NAME,
+    posts
+  }
+}
+
+export function sortPostsByDate (posts = []) {
+  return {
+    type: SORT_POSTS_BY_DATE,
+    posts
+  }
+}
+
+export function sortPostsByVote (posts = []) {
+  return {
+    type: SORT_POSTS_BY_VOTE,
+    posts
+  }
+}
+
 
 export function receiveCategories (categories = []) {
   return {
@@ -78,9 +103,9 @@ export function addPost (post) {
   }
 }
 
-export const addPostAsync = (id, timestamp, title, body, author, category) => dispatch => (
+export const addPostAsync = (timestamp, title, body, author, category) => dispatch => (
   APIUtil
-    .addPost(id, timestamp, title, body, author, category)
+    .addPost(timestamp, title, body, author, category)
     .then(post => dispatch(addPost(post)))
 )
 

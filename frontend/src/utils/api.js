@@ -45,7 +45,7 @@ export const deletePost = (id) =>
     },
   }).then(res => res.json())
 
-export const addPost = (id, timestamp, title, body, author, category) =>
+export const addPost = (timestamp, title, body, author, category) =>
   fetch(`${api}/posts`, {
     method: 'POST',
     headers: {
