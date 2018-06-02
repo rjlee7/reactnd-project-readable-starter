@@ -66,41 +66,17 @@ function forum (state = initialForumState, action) {
     case SORT_POSTS_BY_NAME :
       return {
         ...state,
-        posts: state.posts.sort((a, b) => {
-          let nameA = a.author.toLowerCase(),
-            nameB = b.author.toLowerCase()
-          if (nameA < nameB)
-            return -1
-          if (nameA > nameB)
-            return 1
-          return 0
-      })
+        posts: state.posts.sort((a, b) => a.author - b.author)
     }
     case SORT_POSTS_BY_DATE :
       return {
         ...state,
-        posts: state.posts.sort((a, b) => {
-          let timestampA = a.timestamp,
-            timestampB = b.timestamp
-          if (timestampA < timestampB)
-            return -1
-          if (timestampA > timestampB)
-            return 1
-          return 0
-      })
+        posts: state.posts.sort((a, b) => a.timestamp - b.timestamp)
     }
     case SORT_POSTS_BY_VOTE :
     return {
       ...state,
-      posts: state.posts.sort((a, b) => {
-        let voteA = a.voteScore,
-          voteB = b.voteScore
-        if (voteA < voteB)
-          return -1
-        if (voteA > voteB)
-          return 1
-        return 0
-      })
+      posts: state.posts.sort((a, b) => a.voteScore - b.voteScore)
     }
     default :
       return state

@@ -8,7 +8,7 @@ import FaChevronDown from 'react-icons/lib/fa/chevron-down'
 import FaSort from 'react-icons/lib/fa/sort'
 import Modal from 'react-modal'
 import NewPostView from '../components/NewPostView'
-import PostView from '../components/PostView'
+import PostsView from '../components/PostsView'
 
 import {
   receivePostsForCategoryAsync,
@@ -36,7 +36,7 @@ class Main extends Component {
     return (
       <div>
         <div className='forum'>
-          <PostView posts={posts}/>
+          <PostsView posts={posts}/>
         </div>
 
         <Modal

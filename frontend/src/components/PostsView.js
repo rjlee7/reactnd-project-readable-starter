@@ -15,7 +15,7 @@ import FaChevronDown from 'react-icons/lib/fa/chevron-down'
 import FaSort from 'react-icons/lib/fa/sort'
 import Loading from 'react-loading'
 
-class PostView extends Component {
+class PostsView extends Component {
   state = {
   }
 
@@ -23,9 +23,9 @@ class PostView extends Component {
   }
 
   render() {
-    const { post } = this.props
+    const { posts } = this.props
     const { comments } = this.props.forum
-    console.log('post',post)
+
     return (
       <div className='post-table'>
         <div className="row">
@@ -36,24 +36,28 @@ class PostView extends Component {
           <div className="col-md-2" onClick={()=>{this.props.dispatch(sortPostsByName())}}>author<FaSort /></div>
           <div className="col-md-2" onClick={()=>{this.props.dispatch(sortPostsByDate())}}>date<FaSort /></div>
         </div>
-        <div className="row">
-          <div className="col-md-2"><FaChevronUp /><FaChevronDown /></div>
-          <div className="col-md-2">{post.voteScore}</div>
-          <div className="col-md-2">{post.category}</div>
-          <div className="col-md-2"><Link to={{
-            pathname: `/${post.category}/${post.id}`
-          }}>{post.title}</Link></div>
-          <div className="col-md-2">{post.author}</div>
-          <div className="col-md-2">{formatDate(post.timestamp)}</div>
-        </div>
-        <div className="row">
-          <div className="col-md-2"><Link to={{
-            pathname: `/${post.category}/${post.id}/new-comment`
-          }}>write comment</Link></div>
-          <div className="col-md-2"><Link to={{
-            pathname: `/${post.category}/${post.id}/comments`
-          }}>view comments</Link></div>
-        </div>
+          {posts.map(post => (
+            <div key={post.id} post={post}>
+              <div className="row">
+                <div className="col-md-2"><FaChevronUp /><FaChevronDown /></div>
+                <div className="col-md-2">{post.voteScore}</div>
+                <div className="col-md-2">{post.category}</div>
+                <div className="col-md-2"><Link to={{
+                  pathname: `/${post.category}/${post.id}`
+                }}>{post.title}</Link></div>
+                <div className="col-md-2">{post.author}</div>
+                <div className="col-md-2">{formatDate(post.timestamp)}</div>
+              </div>
+              <div className="row">
+                <div className="col-md-2"><Link to={{
+                  pathname: `/${post.category}/${post.id}/new-comment`
+                }}>write comment</Link></div>
+                <div className="col-md-2"><Link to={{
+                  pathname: `/${post.category}/${post.id}/comments`
+                }}>view comments</Link></div>
+              </div>
+            </div>
+          ))}
       </div>
     )
   }
@@ -67,4 +71,4 @@ function mapStateToProps ({ forum }) {
 
 export default connect(
   mapStateToProps,
-)(PostView)
+)(PostsView)

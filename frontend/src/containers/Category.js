@@ -11,7 +11,7 @@ import FaChevronUp from 'react-icons/lib/fa/chevron-up'
 import FaChevronDown from 'react-icons/lib/fa/chevron-down'
 import FaSort from 'react-icons/lib/fa/sort'
 import { formatDate } from '../utils/helpers'
-import PostView from '../components/PostView'
+import PostsView from '../components/PostsView'
 
 class Category extends Component {
   componentDidMount() {
@@ -30,7 +30,7 @@ class Category extends Component {
     const { posts } = this.props.forum
     return (
       posts && posts.length ? (
-        <PostView posts={posts}/>
+        <PostsView posts={posts}/>
       ) : 'No posts for this category.'
     )
   }

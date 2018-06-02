@@ -26,16 +26,14 @@ class Post extends Component {
   componentDidMount() {
     let post_id = this.props.match.params.post_id
     this.props.dispatch(receivePostAsync(post_id))
-    // this.props.dispatch(receiveCommentsAsync(post_id))
   }
 
   render() {
-    const { posts } = this.props.forum
+    const { post } = this.props.forum
 
     return (
-      <div className='container'>
-          <PostView posts={posts}/>
-      </div>
+      post ? <PostView post={post}/> : null
+
     )
   }
 }
