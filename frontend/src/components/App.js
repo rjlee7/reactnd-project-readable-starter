@@ -16,23 +16,25 @@ class App extends Component {
 
   render() {
     return (
-      <div className='container'>
+      <div>
         <NavbarView />
-        <Switch>
-          <Route exact path='/' render={(props) => (
-            <Main {...props}/>
-          )}/>
-          <Route exact path={`/new-post`} render={(props) => (
-            <NewPostView />
-          )}/>
-          <Route exact path={`/:category`} render={(props) => (
-            <Category {...props}/>
-          )}/>
-          <Route exact path={`/:category/:post_id`} render={(props) => (
-            <Post {...props}/>
-          )}/>
-          <Route component={NotFoundView}/>
-        </Switch>
+        <div className='container'>
+          <Switch>
+            <Route exact path='/' render={(props) => (
+              <Main {...props}/>
+            )}/>
+            <Route exact path={`/new-post`} render={(props) => (
+              <NewPostView />
+            )}/>
+            <Route exact path={`/:category`} render={(props) => (
+              <Category {...props}/>
+            )}/>
+            <Route exact path={`/:category/:post_id`} render={(props) => (
+              <Post {...props}/>
+            )}/>
+            <Route component={NotFoundView}/>
+          </Switch>
+        </div>
       </div>
     )
   }

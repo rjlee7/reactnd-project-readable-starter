@@ -12,6 +12,7 @@ import {
 import { formatDate } from '../utils/helpers'
 import FaChevronUp from 'react-icons/lib/fa/chevron-up'
 import FaChevronDown from 'react-icons/lib/fa/chevron-down'
+import FaAngleDown from 'react-icons/lib/fa/angle-down'
 import FaSort from 'react-icons/lib/fa/sort'
 import Loading from 'react-loading'
 import CommentView from './CommentView'
@@ -32,27 +33,22 @@ class PostView extends Component {
     console.log('post',post)
     return (
       <div className='post-table'>
-        <div className="row">
-          <div className="col-md-2">vote score</div>
-          <div className="col-md-2">category</div>
-          <div className="col-md-2">title</div>
-          <div className="col-md-2">body</div>
-          <div className="col-md-2">author</div>
-          <div className="col-md-2">date</div>
+        <div className="post-options">
+          <button className="btn btn-secondary button-space" type="button">Edit Post</button>
+          <button className="btn btn-default" type="button">Delete Post</button>
         </div>
-        <div className="row">
-          <div className="col-md-2">{post.voteScore}</div>
-          <div className="col-md-2">{post.category}</div>
-          <div className="col-md-2">{post.title}</div>
-          <div className="col-md-2">{post.body}</div>
-          <div className="col-md-2">{post.author}</div>
-          <div className="col-md-2">{formatDate(post.timestamp)}</div>
+        <div>
+          <h3>{post.title}</h3>
+          <p className="post-details">category: {post.category}</p>
+          <p className="post-details">written by {post.author} on {formatDate(post.timestamp)}</p>
+          <p className="post-details">votes: {post.voteScore}</p>
+          <p className="post-details">{post.body}</p>
         </div>
         <div className="comment-block">
           {(comments && comments.length) ?  (
             <div className="row">
-              <div className="col-md-2">vote score</div>
-              <div className="col-md-2">body</div>
+              <div className="col-md-2">votes</div>
+              <div className="col-md-2">comment</div>
               <div className="col-md-2">author</div>
               <div className="col-md-2">date</div>
               <div className="col-md-2"></div>
@@ -61,9 +57,9 @@ class PostView extends Component {
           ) : null}
           {(comments && comments.length) ? comments.map(comment => (
             <CommentView key={comment.id} comment={comment}/>
-          )) : <div>No comments for this post.</div>}
+          )) : <div className="no-content">No comments for this post.</div>}
           <button className="btn btn-primary" type="button" data-toggle="collapse" data-target="#newComment" aria-expanded="false" aria-controls="newComment">
-            New Comment
+            New Comment <FaAngleDown/>
           </button>
           <div className="collapse" id="newComment">
             <div className="card card-body">

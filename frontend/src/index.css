@@ -19,17 +19,6 @@ li {
   min-width: 1070px;
 }
 
-.header {
-  font-size: 50px;
-  font-weight: 300;
-  margin: 10px 0;
-}
-
-.subheader {
-  font-size: 20px;
-  font-weight: 300;
-}
-
 .post-table {
   padding: 50px;
   width: 100%;
@@ -71,11 +60,24 @@ li {
   margin-bottom: 20px;
 }
 
+.no-content {
+  padding: 50px 0px;
+}
+
 .comment-block {
   padding: 50px;
 }
 
 .post-options {
   text-align: right;
-  margin: 50px 100px 50px 0px;
+  margin: 50px 0px;
+}
+
+.button-space {
+  margin-right: 20px;
+}
+
+.post-details {
+  margin-top: 20px;
+  margin-left: 50px;
 }

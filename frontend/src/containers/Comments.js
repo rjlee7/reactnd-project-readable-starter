@@ -39,7 +39,7 @@ class Comment extends Component {
 
           {(comments && comments.length) ? comments.map(comment => (
             <CommentView key={comment.id} comment={comment}/>
-          )) : <div>No comments for this post.</div>}
+          )) : <div className="no-content">No comments for this post.</div>}
       </div>
     )
   }

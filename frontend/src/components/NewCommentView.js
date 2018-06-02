@@ -28,7 +28,7 @@ class NewCommentView extends Component {
           <label htmlFor="body">Body</label>
           <input type="text" className="form-control" id="body" aria-describedby="body"/>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" className="btn btn-primary">Submit</button>
       </form>
     )
   }

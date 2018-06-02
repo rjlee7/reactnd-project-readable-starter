@@ -5,6 +5,8 @@ import { deleteCommentAsync, updateCommentAsync, voteCommentAsync } from '../act
 import { formatDate } from '../utils/helpers'
 import FaChevronUp from 'react-icons/lib/fa/chevron-up'
 import FaChevronDown from 'react-icons/lib/fa/chevron-down'
+import FaEdit from 'react-icons/lib/fa/edit'
+import FaTrash from 'react-icons/lib/fa/trash-o'
 import Loading from 'react-loading'
 
 class CommentView extends Component {
@@ -22,7 +24,10 @@ class CommentView extends Component {
           <div className="col-md-2">{comment.body}</div>
           <div className="col-md-2">{comment.author}</div>
           <div className="col-md-2">{formatDate(comment.timestamp)}</div>
-          <div className="col-md-2"><button onClick={() => deleteComment(comment.id)}>Delete</button><button onClick={() => editComment(comment.id)}>Edit</button></div>
+          <div className="col-md-2">
+            <button className="btn btn-secondary button-space" type="button" onClick={() => editComment(comment.id)}><FaEdit/></button>
+            <button className="btn btn-default" type="button" onClick={() => deleteComment(comment.id)}><FaTrash/></button>
+          </div>
           <div className="col-md-2">
             <button className="btn" type="button" onClick={() => voteComment(comment.id)}><FaChevronUp/></button>
             <button className="btn" type="button" onClick={() => voteComment(comment.id)}><FaChevronDown/></button>

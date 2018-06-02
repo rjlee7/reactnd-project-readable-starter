@@ -31,7 +31,7 @@ class Category extends Component {
     return (
       posts && posts.length ? (
         <PostsView posts={posts}/>
-      ) : 'No posts for this category.'
+      ) : <div className="no-content">No posts for this category.</div>
     )
   }
 }

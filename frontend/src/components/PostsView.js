@@ -22,12 +22,6 @@ class PostsView extends Component {
   componentDidMount() {
   }
 
-  handleChange() {
-    this.props.dispatch(sortPostsByVote())
-    this.props.dispatch(sortPostsByName())
-    this.props.dispatch(sortPostsByDate())
-  }
-
   render() {
     const { posts } = this.props
     const { comments } = this.props.forum
@@ -36,22 +30,21 @@ class PostsView extends Component {
     return (
       <div>
         <div className="post-options">
-          <span>sort by </span><select className="sort-control" id="sort" onChange={this.handleChange}>
-            {options.map(option => (
-              <option value={option} key={option}>
-                {option}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="post-options">
-          <Link to={{
+            <button type="button" className="btn btn-default dropdown-toggle" data-toggle="dropdown">
+              Sort
+            </button>
+            <div className="dropdown-menu">
+              <a className="dropdown-item" onClick={() => this.props.dispatch(sortPostsByVote())}>vote</a>
+              <a className="dropdown-item" onClick={() => this.props.dispatch(sortPostsByName())}>author</a>
+              <a className="dropdown-item" onClick={() => this.props.dispatch(sortPostsByDate())}>date</a>
+            </div>
+            <Link to={{
             pathname: `/new-post`
           }}><button className="btn btn-primary" type="button">New Post</button></Link>
         </div>
         <div className='post-table'>
           <div className="row">
-            <div className="col-md-2">vote score</div>
+            <div className="col-md-2">votes</div>
             <div className="col-md-2">category</div>
             <div className="col-md-2">title</div>
             <div className="col-md-2">author</div>
