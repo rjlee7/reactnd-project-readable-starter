@@ -19,11 +19,16 @@ class NewCommentView extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          <input type="text" value={this.state.value} onChange={this.handleChange} />
-        </label>
-        <input type="submit" value="Submit" />
+      <form className="new-post" onSubmit={this.handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="author">Author</label>
+          <input type="text" className="form-control" id="author" aria-describedby="author"/>
+        </div>
+        <div className="form-group">
+          <label htmlFor="body">Body</label>
+          <input type="text" className="form-control" id="body" aria-describedby="body"/>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
       </form>
     )
   }

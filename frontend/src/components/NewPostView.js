@@ -35,30 +35,30 @@ class NewPostView extends Component {
   render() {
     const options = ['react','redux','udacity'];
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Author:
-          <input type="text" name="author" onChange={this.handleChange} />
-        </label>
-        <label>
-          Title:
-          <input type="text" name="title" onChange={this.handleChange} />
-        </label>
-        <label>
-          Body:
-          <input type="text" name="body" onChange={this.handleChange} />
-        </label>
-        <label>
-          Category:
-          <select name="category" onChange={this.handleChange}>
+      <form className="new-post" onSubmit={this.handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="author">Author</label>
+          <input type="text" className="form-control" id="author" aria-describedby="author"/>
+        </div>
+        <div className="form-group">
+          <label htmlFor="title">Title</label>
+          <input type="text" className="form-control" id="title" aria-describedby="title"/>
+        </div>
+        <div className="form-group">
+          <label htmlFor="body">Body</label>
+          <input type="text" className="form-control" id="body" aria-describedby="body"/>
+        </div>
+        <div className="form-group">
+          <label htmlFor="category">Category</label>
+          <select className="form-control" id="category" onChange={this.handleChange}>
             {options.map(option => (
               <option value={option} key={option}>
                 {option}
               </option>
             ))}
           </select>
-        </label>
-        <input type="submit" value="Submit" />
+        </div>
+        <button type="submit" className="btn btn-primary">Submit</button>
       </form>
     )
   }

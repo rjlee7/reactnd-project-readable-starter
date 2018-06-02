@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import {
   receivePostAsync,
   deletePostAsync,
+  receiveCommentsAsync
 } from '../actions'
 import {
   receivePostsForCategoryAsync,
@@ -26,6 +27,7 @@ class Post extends Component {
   componentDidMount() {
     let post_id = this.props.match.params.post_id
     this.props.dispatch(receivePostAsync(post_id))
+    this.props.dispatch(receiveCommentsAsync(post_id))
   }
 
   render() {

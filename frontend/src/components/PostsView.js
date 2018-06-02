@@ -22,42 +22,57 @@ class PostsView extends Component {
   componentDidMount() {
   }
 
+  handleChange() {
+    this.props.dispatch(sortPostsByVote())
+    this.props.dispatch(sortPostsByName())
+    this.props.dispatch(sortPostsByDate())
+  }
+
   render() {
     const { posts } = this.props
     const { comments } = this.props.forum
+    const options = ['vote','author','date'];
 
     return (
-      <div className='post-table'>
-        <div className="row">
-          <div className="col-md-2">vote</div>
-          <div className="col-md-2" onClick={()=>{this.props.dispatch(sortPostsByVote())}}>vote score<FaSort /></div>
-          <div className="col-md-2">category</div>
-          <div className="col-md-2">title</div>
-          <div className="col-md-2" onClick={()=>{this.props.dispatch(sortPostsByName())}}>author<FaSort /></div>
-          <div className="col-md-2" onClick={()=>{this.props.dispatch(sortPostsByDate())}}>date<FaSort /></div>
+      <div>
+        <div className="post-options">
+          <span>sort by </span><select className="sort-control" id="sort" onChange={this.handleChange}>
+            {options.map(option => (
+              <option value={option} key={option}>
+                {option}
+              </option>
+            ))}
+          </select>
         </div>
-          {posts.map(post => (
-            <div key={post.id} post={post}>
-              <div className="row">
-                <div className="col-md-2"><FaChevronUp /><FaChevronDown /></div>
-                <div className="col-md-2">{post.voteScore}</div>
-                <div className="col-md-2">{post.category}</div>
-                <div className="col-md-2"><Link to={{
-                  pathname: `/${post.category}/${post.id}`
-                }}>{post.title}</Link></div>
-                <div className="col-md-2">{post.author}</div>
-                <div className="col-md-2">{formatDate(post.timestamp)}</div>
+        <div className="post-options">
+          <Link to={{
+            pathname: `/new-post`
+          }}><button className="btn btn-primary" type="button">New Post</button></Link>
+        </div>
+        <div className='post-table'>
+          <div className="row">
+            <div className="col-md-2">vote score</div>
+            <div className="col-md-2">category</div>
+            <div className="col-md-2">title</div>
+            <div className="col-md-2">author</div>
+            <div className="col-md-2">date</div>
+            <div className="col-md-2">vote</div>
+          </div>
+            {posts.map(post => (
+              <div key={post.id} post={post}>
+                <div className="row">
+                  <div className="col-md-2">{post.voteScore}</div>
+                  <div className="col-md-2">{post.category}</div>
+                  <div className="col-md-2"><Link to={{
+                    pathname: `/${post.category}/${post.id}`
+                  }}>{post.title}</Link></div>
+                  <div className="col-md-2">{post.author}</div>
+                  <div className="col-md-2">{formatDate(post.timestamp)}</div>
+                  <div className="col-md-2"><button className="btn" type="button"><FaChevronUp /></button><button className="btn" type="button"><FaChevronDown /></button></div>
+                </div>
               </div>
-              <div className="row">
-                <div className="col-md-2"><Link to={{
-                  pathname: `/${post.category}/${post.id}/new-comment`
-                }}>write comment</Link></div>
-                <div className="col-md-2"><Link to={{
-                  pathname: `/${post.category}/${post.id}/comments`
-                }}>view comments</Link></div>
-              </div>
-            </div>
-          ))}
+            ))}
+        </div>
       </div>
     )
   }

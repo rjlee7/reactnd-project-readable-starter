@@ -18,15 +18,15 @@ class CommentView extends Component {
       <div>
         {comment ? (
         <div className="row">
-          <div className="col-md-2">
-            <FaChevronUp onClick={() => voteComment(comment.id)}/>
-            <FaChevronDown onClick={() => voteComment(comment.id)}/>
-          </div>
           <div className="col-md-2">{comment.voteScore}</div>
           <div className="col-md-2">{comment.body}</div>
           <div className="col-md-2">{comment.author}</div>
           <div className="col-md-2">{formatDate(comment.timestamp)}</div>
           <div className="col-md-2"><button onClick={() => deleteComment(comment.id)}>Delete</button><button onClick={() => editComment(comment.id)}>Edit</button></div>
+          <div className="col-md-2">
+            <button className="btn" type="button" onClick={() => voteComment(comment.id)}><FaChevronUp/></button>
+            <button className="btn" type="button" onClick={() => voteComment(comment.id)}><FaChevronDown/></button>
+          </div>
         </div>) : null}
       </div>
     )

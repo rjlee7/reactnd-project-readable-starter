@@ -10,7 +10,10 @@ import {
   DELETE_POST,
   SORT_POSTS_BY_NAME,
   SORT_POSTS_BY_DATE,
-  SORT_POSTS_BY_VOTE
+  SORT_POSTS_BY_VOTE,
+  ADD_COMMENT,
+  DELETE_COMMENT,
+  UPDATE_COMMENT
 } from '../actions'
 
 const initialForumState = {
