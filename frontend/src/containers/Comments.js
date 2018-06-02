@@ -2,14 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import {
-  receivePostAsync,
-  deletePostAsync,
-} from '../actions'
-import {
-  receivePostsForCategoryAsync,
-  sortPostsByName,
-  sortPostsByDate,
-  sortPostsByVote
+  receiveCommentsAsync,
 } from '../actions'
 import { formatDate } from '../utils/helpers'
 import FaChevronUp from 'react-icons/lib/fa/chevron-up'
@@ -19,22 +12,34 @@ import Loading from 'react-loading'
 import CommentView from '../components/CommentView'
 import PostView from '../components/PostView'
 
-class Post extends Component {
+class Comment extends Component {
   state = {
   }
 
   componentDidMount() {
     let post_id = this.props.match.params.post_id
-    this.props.dispatch(receivePostAsync(post_id))
-    // this.props.dispatch(receiveCommentsAsync(post_id))
+    this.props.dispatch(receiveCommentsAsync(post_id))
   }
 
-  render() {
-    const { posts } = this.props.forum
+  deleteComment() {
+    let post_id = this.props.match.params.post_id
+    // this.props.dispatch(deleteCommentAsync(post_id))
+  }
 
+  editComment() {
+    let post_id = this.props.match.params.post_id
+  }
+
+
+  render() {
+    const { comments } = this.props.forum
+    console.log('comments',comments)
     return (
       <div className='container'>
-          <PostView posts={posts}/>
+
+          {(comments && comments.length) ? comments.map(comment => (
+            <CommentView key={comment.id} comment={comment}/>
+          )) : <div>No comments for this post.</div>}
       </div>
     )
   }
@@ -48,4 +53,4 @@ function mapStateToProps ({ forum }) {
 
 export default connect(
   mapStateToProps,
-)(Post)
+)(Comment)

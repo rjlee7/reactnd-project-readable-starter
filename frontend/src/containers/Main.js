@@ -5,9 +5,11 @@ import { receivePostsAsync } from '../actions'
 import { formatDate } from '../utils/helpers'
 import FaChevronUp from 'react-icons/lib/fa/chevron-up'
 import FaChevronDown from 'react-icons/lib/fa/chevron-down'
+import FaSort from 'react-icons/lib/fa/sort'
 import Modal from 'react-modal'
 import NewPostView from '../components/NewPostView'
 import PostView from '../components/PostView'
+
 import {
   receivePostsForCategoryAsync,
   sortPostsByName,
@@ -33,36 +35,20 @@ class Main extends Component {
 
     return (
       <div>
-
         <div className='forum'>
-          <table className='forum-table'>
-            <thead>
-              <tr>
-                <th onClick={()=>{this.props.dispatch(sortPostsByVote())}}>vote score</th>
-                <th>category</th>
-                <th>title</th>
-                <th onClick={()=>{this.props.dispatch(sortPostsByName())}}>author</th>
-                <th onClick={()=>{this.props.dispatch(sortPostsByDate())}}>date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {posts.map((post) => (
-                <PostView key={post.id} post={post}/>
-              ))}
-            </tbody>
-          </table>
+          <PostView posts={posts}/>
         </div>
 
-      <Modal
-        className='modal'
-        overlayClassName='overlay'
-        isOpen={newPostModalOpen}
-        onRequestClose={this.newPostModal}
-        contentLabel='Modal'
-      >
-        {newPostModalOpen && <NewPostView list={this.generateNewPost()}/>}
-      </Modal>
-</div>
+        <Modal
+          className='modal'
+          overlayClassName='overlay'
+          isOpen={newPostModalOpen}
+          onRequestClose={this.newPostModal}
+          contentLabel='Modal'
+        >
+          {newPostModalOpen && <NewPostView list={this.generateNewPost()}/>}
+        </Modal>
+      </div>
     )
   }
 }

@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
-import { Route, Link } from 'react-router-dom'
+import { Route, Link, Switch } from 'react-router-dom'
 import Main from '../containers/Main'
 import Categories from '../containers/Categories'
 import Category from '../containers/Category'
 import Post from '../containers/Post'
+import Comments from '../containers/Comments'
 import NewPostView from './NewPostView'
+import NewCommentView from './NewCommentView'
 import Modal from 'react-modal'
+import NotFoundView from './NotFoundView'
 
 class App extends Component {
   state = {
@@ -29,20 +32,22 @@ class App extends Component {
 
         <div className='nav'>
           <h1 className='header'><Link to={`/`}>Readable</Link></h1>
-          <button
-            className='shopping-list'
-            onClick={this.openNewPostModal}
-            >
-              New Post
-          </button>
+          <Link to={`/new-post`}>
+            <button>
+                New Post
+            </button>
+          </Link>
         </div>
 
-        <div>
+        <Switch>
           <Route exact path='/' render={(props) => (
             <div>
               <Categories {...props}/>
               <Main {...props}/>
             </div>
+          )}/>
+          <Route exact path={`/new-post`} render={(props) => (
+            <NewPostView />
           )}/>
           <Route exact path={`/:category`} render={(props) => (
             <div>
@@ -56,9 +61,19 @@ class App extends Component {
               <Post {...props}/>
             </div>
           )}/>
-        </div>
+          <Route exact path={`/:category/:post_id/new-comment`} render={(props) => (
+            <NewCommentView />
+          )}/>
+          <Route exact path={`/:category/:post_id/comments`} render={(props) => (
+            <div>
+              <Categories {...props}/>
+              <Comments {...props}/>
+            </div>
+          )}/>
+          <Route component={NotFoundView}/>
+        </Switch>
 
-        <Modal
+        {/* <Modal
           className='modal'
           overlayClassName='overlay'
           isOpen={newPostModalOpen}
@@ -67,7 +82,7 @@ class App extends Component {
           ariaHideApp={false}
         >
           {newPostModalOpen && <NewPostView/>}
-        </Modal>
+        </Modal> */}
 
       </div>
     )

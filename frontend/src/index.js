@@ -8,6 +8,7 @@ import reducer from './reducers'
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import thunk from 'redux-thunk';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 const logger = store => next => action => {
   console.group(action.type)

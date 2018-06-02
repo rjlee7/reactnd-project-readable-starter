@@ -9,6 +9,7 @@ import {
 } from '../actions'
 import FaChevronUp from 'react-icons/lib/fa/chevron-up'
 import FaChevronDown from 'react-icons/lib/fa/chevron-down'
+import FaSort from 'react-icons/lib/fa/sort'
 import { formatDate } from '../utils/helpers'
 import PostView from '../components/PostView'
 
@@ -29,24 +30,8 @@ class Category extends Component {
     const { posts } = this.props.forum
     return (
       posts && posts.length ? (
-        <table className='forum-table'>
-          <thead>
-            <tr>
-              <th onClick={()=>{this.props.dispatch(sortPostsByVote())}}>vote score</th>
-              <th>category</th>
-              <th>title</th>
-              <th onClick={()=>{this.props.dispatch(sortPostsByName())}}>author</th>
-              <th onClick={()=>{this.props.dispatch(sortPostsByDate())}}>date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {posts.map((post) => (
-              <PostView key={post.id} post={post}/>
-            ))}
-          </tbody>
-        </table>
+        <PostView posts={posts}/>
       ) : 'No posts for this category.'
-
     )
   }
 }

@@ -15,18 +15,20 @@ class CommentView extends Component {
     const { voteComment } = this.props
 
     return (
-          <ul>
-            <li>
-              <FaChevronUp onClick={() => voteComment(comment.id)}/>
-              <FaChevronDown onClick={() => voteComment(comment.id)}/>
-            </li>
-            <li>{comment.voteScore}</li>
-            <li>{comment.body}</li>
-            <li>{comment.author}</li>
-            <li>{formatDate(comment.timestamp)}</li>
-            <li><button onClick={() => deleteComment(comment.id)}>Delete</button></li>
-            <li><button onClick={() => editComment(comment.id)}>Edit</button></li>
-          </ul>
+      <div>
+        {comment ? (
+        <div className="row">
+          <div className="col-md-2">
+            <FaChevronUp onClick={() => voteComment(comment.id)}/>
+            <FaChevronDown onClick={() => voteComment(comment.id)}/>
+          </div>
+          <div className="col-md-2">{comment.voteScore}</div>
+          <div className="col-md-2">{comment.body}</div>
+          <div className="col-md-2">{comment.author}</div>
+          <div className="col-md-2">{formatDate(comment.timestamp)}</div>
+          <div className="col-md-2"><button onClick={() => deleteComment(comment.id)}>Delete</button><button onClick={() => editComment(comment.id)}>Edit</button></div>
+        </div>) : null}
+      </div>
     )
   }
 }
