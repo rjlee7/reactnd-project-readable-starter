@@ -2,12 +2,14 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { addPostAsync } from '../actions'
+import { uuidv4 } from '../utils/helpers'
 
 class NewPostView extends Component {
   constructor(props) {
       super(props);
 
       this.state = {
+        id: '',
         author: '',
         title: '',
         body: '',
@@ -15,21 +17,19 @@ class NewPostView extends Component {
         timestamp: (new Date()).getTime()
       };
 
-      this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    this.setState({id:uuidv4()})
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    const {title,body,author,category,timestamp} = this.state;
-    this.props.dispatch(addPostAsync(timestamp, title, body, author, category))
-  }
+    const {timestamp,title,body,author,category,id} = this.state;
+    console.log('this.state',this.state)
+    this.props.dispatch(addPostAsync(timestamp, title, body, author, category, id))
 
-  handleChange(event) {
-    console.log('this',this)
-    const {name, value} = event.target
-    console.log('name',name,'value',value)
-    this.setState({[name]: value});
   }
 
   render() {
@@ -38,19 +38,19 @@ class NewPostView extends Component {
       <form className="new-post" onSubmit={this.handleSubmit}>
         <div className="form-group">
           <label htmlFor="author">Author</label>
-          <input type="text" className="form-control" id="author" aria-describedby="author"/>
+          <input type="text" value={this.state.author} onChange={(e) => this.setState({author:e.target.value})} className="form-control" id="author" aria-describedby="author"/>
         </div>
         <div className="form-group">
           <label htmlFor="title">Title</label>
-          <input type="text" className="form-control" id="title" aria-describedby="title"/>
+          <input type="text" value={this.state.title} onChange={(e) => this.setState({title:e.target.value})} className="form-control" id="title" aria-describedby="title"/>
         </div>
         <div className="form-group">
           <label htmlFor="body">Body</label>
-          <input type="text" className="form-control" id="body" aria-describedby="body"/>
+          <input type="text" value={this.state.body} onChange={(e) =>  this.setState({body:e.target.value})} className="form-control" id="body" aria-describedby="body"/>
         </div>
         <div className="form-group">
           <label htmlFor="category">Category</label>
-          <select className="form-control" id="category" onChange={this.handleChange}>
+          <select className="form-control" id="category" onChange={(e) => this.setState({category: e.target.value})}>
             {options.map(option => (
               <option value={option} key={option}>
                 {option}
@@ -64,4 +64,12 @@ class NewPostView extends Component {
   }
 }
 
-export default NewPostView
+function mapStateToProps ({ forum }) {
+  return {
+    forum
+  }
+}
+
+export default connect(
+  mapStateToProps,
+)(NewPostView)

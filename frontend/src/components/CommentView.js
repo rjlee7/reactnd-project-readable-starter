@@ -10,7 +10,41 @@ import FaTrash from 'react-icons/lib/fa/trash-o'
 import Loading from 'react-loading'
 
 class CommentView extends Component {
+  state = {
+    status: 'view',
+    body: null,
+    author: null
+  }
+
+  componentDidMount() {
+    const { comment } = this.props
+    this.setState({
+      body: comment.body,
+      author: comment.author
+    })
+  }
+
+  editComment() {
+    this.setState({
+      status: 'edit'
+    })
+  }
+
+  onEdit(value) {
+    //on keypress enter call saveEditedComment
+  }
+
+  saveEditedComment() {
+
+  }
+
+  deleteComment() {
+
+  }
+
   render() {
+    const { status, body, author } = this.state
+    console.log('body',body,'author',author)
     const { comment } = this.props
     const { deleteComment } = this.props
     const { editComment } = this.props
@@ -21,12 +55,12 @@ class CommentView extends Component {
         {comment ? (
         <div className="row">
           <div className="col-md-2">{comment.voteScore}</div>
-          <div className="col-md-2">{comment.body}</div>
-          <div className="col-md-2">{comment.author}</div>
+          <div className="col-md-2">{status == 'view' ? body : (<input type="text" className="input-text" defaultValue={body} onChange={(e) => this.onEdit(e.target.value)} onBlur={() => this.setState({status: 'view'})}/>)}</div>
+          <div className="col-md-2">{status == 'view' ? author : (<input type="text" className="input-text" defaultValue={author} onChange={(e) => this.onEdit(e.target.value)} onBlur={() => this.setState({status: 'view'})}/>)}</div>
           <div className="col-md-2">{formatDate(comment.timestamp)}</div>
           <div className="col-md-2">
-            <button className="btn btn-secondary button-space" type="button" onClick={() => editComment(comment.id)}><FaEdit/></button>
-            <button className="btn btn-default" type="button" onClick={() => deleteComment(comment.id)}><FaTrash/></button>
+            <button className="btn btn-secondary button-space" type="button" onClick={() => this.editComment(comment.id)}><FaEdit/></button>
+            <button className="btn btn-default" type="button" onClick={() => this.deleteComment(comment.id)}><FaTrash/></button>
           </div>
           <div className="col-md-2">
             <button className="btn" type="button" onClick={() => voteComment(comment.id)}><FaChevronUp/></button>

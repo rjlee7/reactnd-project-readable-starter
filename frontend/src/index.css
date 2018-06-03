@@ -60,6 +60,10 @@ li {
   margin-bottom: 20px;
 }
 
+.input-text {
+  width: 100%;
+}
+
 .no-content {
   padding: 50px 0px;
 }

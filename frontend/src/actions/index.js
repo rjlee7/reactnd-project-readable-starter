@@ -103,9 +103,9 @@ export function addPost (post) {
   }
 }
 
-export const addPostAsync = (timestamp, title, body, author, category) => dispatch => (
+export const addPostAsync = (timestamp, title, body, author, category, id) => dispatch => (
   APIUtil
-    .addPost(timestamp, title, body, author, category)
+    .addPost(timestamp, title, body, author, category, id)
     .then(post => dispatch(addPost(post)))
 )
 

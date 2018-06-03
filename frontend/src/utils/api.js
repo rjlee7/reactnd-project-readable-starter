@@ -45,14 +45,14 @@ export const deletePost = (id) =>
     },
   }).then(res => res.json())
 
-export const addPost = (timestamp, title, body, author, category) =>
+export const addPost = (timestamp, title, body, author, category, id) =>
   fetch(`${api}/posts`, {
     method: 'POST',
     headers: {
       ...headers,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ timestamp, title, body, author, category })
+    body: JSON.stringify({ timestamp, title, body, author, category, id })
   }).then(res => res.json())
 
 export const getCommentsForPost = (post_id) =>
