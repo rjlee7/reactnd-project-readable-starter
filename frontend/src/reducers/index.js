@@ -4,14 +4,12 @@ import {
   RECEIVE_POSTS,
   RECEIVE_CATEGORIES,
   RECEIVE_COMMENTS,
-  UPDATE_POST,
   RECEIVE_POST,
   ADD_POST,
   DELETE_POST,
   SORT_POSTS_BY_NAME,
   SORT_POSTS_BY_DATE,
   SORT_POSTS_BY_VOTE,
-  ADD_COMMENT,
   DELETE_COMMENT,
   UPDATE_COMMENT,
   VOTE_POST,
@@ -55,13 +53,6 @@ function forum (state = initialForumState, action) {
         ...state,
         posts: state.posts.concat([...post])
       }
-    case UPDATE_POST :
-      return {
-        ...state,
-        posts: state.posts.map(currentPost => {
-          return (currentPost.id === post.id) ? post : currentPost
-        })
-      }
     case VOTE_POST :
       return {
         ...state,
@@ -73,14 +64,8 @@ function forum (state = initialForumState, action) {
       return {
         ...state,
         posts: state.posts.filter(currentPost=>{
-          console.log('delete post',post)
           return currentPost.id !== post.id
         })
-      }
-    case ADD_COMMENT :
-      return {
-        ...state,
-        comments: state.comments.concat([...comment])
       }
     case UPDATE_COMMENT :
       return {
@@ -106,7 +91,14 @@ function forum (state = initialForumState, action) {
     case SORT_POSTS_BY_NAME :
       return {
         ...state,
-        posts: state.posts.sort((a, b) => a.author - b.author)
+        posts: state.posts.sort((a, b) => {
+          const nameA = a.author.toLowerCase()
+          const nameB = b.author.toLowerCase()
+          if(nameA > nameB) return 1
+          if(nameA < nameB) return -1
+          if(nameA === nameB) return 0
+          else return 0
+        })
     }
     case SORT_POSTS_BY_DATE :
       return {

@@ -11,7 +11,7 @@ import FaChevronDown from 'react-icons/lib/fa/chevron-down'
 import FaEdit from 'react-icons/lib/fa/edit'
 import FaTrash from 'react-icons/lib/fa/trash-o'
 
-class CommentView extends Component {
+class Comment extends Component {
   state = {
     status: 'view',
     body: null
@@ -116,4 +116,4 @@ function mapStateToProps ({ forum }) {
 
 export default connect(
   mapStateToProps,
-)(CommentView)
+)(Comment)

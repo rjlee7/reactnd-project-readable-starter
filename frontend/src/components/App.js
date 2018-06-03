@@ -3,25 +3,23 @@ import { Route, Switch } from 'react-router-dom'
 import Main from '../containers/Main'
 import Category from '../containers/Category'
 import Post from '../containers/Post'
-import NewPostView from './NewPostView'
+import NewPost from '../containers/NewPost'
 import NotFoundView from './NotFoundView'
-import NavbarView from './NavbarView'
+import Navbar from '../containers/Navbar'
 
 class App extends Component {
-  state = {
-  }
 
   render() {
     return (
       <div>
-        <NavbarView />
+        <Navbar />
         <div className='container'>
           <Switch>
             <Route exact path='/' render={(props) => (
               <Main {...props}/>
             )}/>
             <Route exact path={`/new-post`} render={(props) => (
-              <NewPostView />
+              <NewPost {...props}/>
             )}/>
             <Route exact path={`/:category`} render={(props) => (
               <Category {...props}/>

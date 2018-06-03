@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { addPostAsync } from '../actions'
 import { uuidv4 } from '../utils/helpers'
 
 class NewPostView extends Component {
@@ -25,9 +23,9 @@ class NewPostView extends Component {
 
   handleSubmit(event) {
     event.preventDefault()
+    const { addPost } = this.props
     const { timestamp, title, body, author, category, id } = this.state
-    this.props.dispatch(addPostAsync(timestamp, title, body, author, category, id))
-
+    addPost(timestamp, title, body, author, category, id)
   }
 
   render() {
@@ -89,12 +87,4 @@ class NewPostView extends Component {
   }
 }
 
-function mapStateToProps ({ forum }) {
-  return {
-    forum
-  }
-}
-
-export default connect(
-  mapStateToProps,
-)(NewPostView)
+export default NewPostView

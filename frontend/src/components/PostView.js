@@ -1,14 +1,8 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import {
-  updatePostAsync,
-  deletePostAsync,
-} from '../actions'
 import { formatDate } from '../utils/helpers'
 import FaAngleDown from 'react-icons/lib/fa/angle-down'
-import CommentView from './CommentView'
-import NewCommentView from './NewCommentView'
-import $ from 'jquery';
+import Comment from '../containers/Comment'
+import NewComment from '../containers/NewComment'
 
 class PostView extends Component {
   state = {
@@ -18,7 +12,6 @@ class PostView extends Component {
   }
 
   componentDidMount() {
-    $('.collapse').collapse()
     const { post } = this.props
     this.setState({
       title: post.title,
@@ -26,31 +19,31 @@ class PostView extends Component {
     })
   }
 
-  editPost() {
+  startEditing() {
     this.setState({
       status: 'edit'
     })
   }
 
-  onEdit(name, value) {
+  onChange(name, value) {
     this.setState({
       [name]: value
     })
   }
 
   handleKeyPress = (event) => {
-    const { post } = this.props
+    const { post, editPost } = this.props
     const { title, body } = this.state
     if(event.key === 'Enter'){
       this.setState({
         status: 'view'
       })
-      this.props.dispatch(updatePostAsync(post.id, title, body))
+      editPost(post.id, title, body)
     }
   }
 
   render() {
-    const { post, comments } = this.props
+    const { post, comments, deletePost } = this.props
     const { status } = this.state
     return (
       <div className='post-table'>
@@ -58,11 +51,11 @@ class PostView extends Component {
           <button
             className="btn btn-secondary button-space"
             type="button"
-            onClick={() => this.editPost(post.id)}>Edit Post</button>
+            onClick={() => this.startEditing()}>Edit Post</button>
           <button
             className="btn btn-default"
             type="button"
-            onClick={() => this.props.dispatch(deletePostAsync(post.id))}>Delete Post</button>
+            onClick={() => deletePost(post.id)}>Delete Post</button>
         </div>
         <div>
           <h3>{
@@ -72,7 +65,7 @@ class PostView extends Component {
               className="input-text"
               defaultValue={post.title}
               name="title"
-              onChange={(e) => this.onEdit(e.target.name, e.target.value)}
+              onChange={(e) => this.onChange(e.target.name, e.target.value)}
               onBlur={() => this.setState({status: 'view'})}
               onKeyPress={this.handleKeyPress}/>
             }</h3>
@@ -86,7 +79,7 @@ class PostView extends Component {
               className="input-text"
               defaultValue={post.body}
               name="body"
-              onChange={(e) => this.onEdit(e.target.name, e.target.value)}
+              onChange={(e) => this.onChange(e.target.name, e.target.value)}
               onBlur={() => this.setState({status: 'view'})}
               onKeyPress={this.handleKeyPress}/>
             }</p>
@@ -103,11 +96,11 @@ class PostView extends Component {
             </div>
           ) : null}
           {(comments && comments.length) ? comments.map(comment => (
-            <CommentView key={comment.id} comment={comment}/>
+            <Comment key={comment.id} comment={comment}/>
           )) : <div className="no-content">No comments for this post.</div>}
           <button
-            className="btn btn-primary"
             type="button"
+            className="btn btn-primary"
             data-toggle="collapse"
             data-target="#newComment"
             aria-expanded="false"
@@ -116,7 +109,7 @@ class PostView extends Component {
           </button>
           <div className="collapse" id="newComment">
             <div className="card card-body">
-              <NewCommentView post={post}/>
+              <NewComment post={post}/>
             </div>
           </div>
         </div>
@@ -125,12 +118,4 @@ class PostView extends Component {
   }
 }
 
-function mapStateToProps ({ forum }) {
-  return {
-    forum
-  }
-}
-
-export default connect(
-  mapStateToProps,
-)(PostView)
+export default PostView

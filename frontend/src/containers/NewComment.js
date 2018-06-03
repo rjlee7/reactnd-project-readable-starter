@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { addCommentAsync } from '../actions'
 import { uuidv4 } from '../utils/helpers'
 
-class NewCommentView extends Component {
+class NewComment extends Component {
   constructor(props) {
       super(props);
 
@@ -15,7 +15,7 @@ class NewCommentView extends Component {
         timestamp: (new Date()).getTime()
       };
 
-      this.handleSubmit = this.handleSubmit.bind(this)
+      this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -24,8 +24,15 @@ class NewCommentView extends Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    const { id, timestamp, body, author, parentId } = this.state
+    const { id, timestamp, body, author, parentId } = this.state;
     this.props.dispatch(addCommentAsync(id, timestamp, body, author, parentId))
+    this.setState({
+      id: uuidv4(),
+      author: '',
+      body: '',
+      parentId: parentId,
+      timestamp: (new Date()).getTime()
+    })
 
   }
 
@@ -71,4 +78,4 @@ function mapStateToProps ({ forum }) {
 
 export default connect(
   mapStateToProps,
-)(NewCommentView)
+)(NewComment)

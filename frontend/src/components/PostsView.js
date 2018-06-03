@@ -1,12 +1,5 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import {
-  sortPostsByVote,
-  sortPostsByName,
-  sortPostsByDate,
-  votePostAsync
-} from '../actions'
 import { formatDate } from '../utils/helpers'
 import FaChevronUp from 'react-icons/lib/fa/chevron-up'
 import FaChevronDown from 'react-icons/lib/fa/chevron-down'
@@ -19,7 +12,7 @@ class PostsView extends Component {
   }
 
   render() {
-    const { posts } = this.props
+    const { posts, votePostAsync, sortPostsByVote, sortPostsByName, sortPostsByDate} = this.props
 
     return (
       <div>
@@ -28,9 +21,9 @@ class PostsView extends Component {
               Sort
             </button>
             <div className="dropdown-menu">
-              <a className="dropdown-item" onClick={() => this.props.dispatch(sortPostsByVote())}>vote</a>
-              <a className="dropdown-item" onClick={() => this.props.dispatch(sortPostsByName())}>author</a>
-              <a className="dropdown-item" onClick={() => this.props.dispatch(sortPostsByDate())}>date</a>
+              <a className="dropdown-item" onClick={() => sortPostsByVote()}>vote</a>
+              <a className="dropdown-item" onClick={() => sortPostsByName()}>author</a>
+              <a className="dropdown-item" onClick={() => sortPostsByDate()}>date</a>
             </div>
             <Link to={{
             pathname: `/new-post`
@@ -61,13 +54,13 @@ class PostsView extends Component {
                     <button
                       className="btn"
                       type="button"
-                      onClick={() => this.props.dispatch(votePostAsync(post.id, "upVote"))}>
+                      onClick={() => votePostAsync(post.id, "upVote")}>
                       <FaChevronUp />
                     </button>
                     <button
                       className="btn"
                       type="button"
-                      onClick={() => this.props.dispatch(votePostAsync(post.id, "downVote"))}>
+                      onClick={() => votePostAsync(post.id, "downVote")}>
                       <FaChevronDown />
                     </button>
                   </div>
@@ -80,12 +73,4 @@ class PostsView extends Component {
   }
 }
 
-function mapStateToProps ({ forum }) {
-  return {
-    forum
-  }
-}
-
-export default connect(
-  mapStateToProps,
-)(PostsView)
+export default PostsView
