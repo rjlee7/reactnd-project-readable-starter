@@ -16,7 +16,7 @@ class NewPostView extends Component {
         timestamp: (new Date()).getTime()
       };
 
-      this.handleSubmit = this.handleSubmit.bind(this);
+      this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentDidMount() {
@@ -24,8 +24,8 @@ class NewPostView extends Component {
   }
 
   handleSubmit(event) {
-    event.preventDefault();
-    const { timestamp, title, body, author, category, id } = this.state;
+    event.preventDefault()
+    const { timestamp, title, body, author, category, id } = this.state
     this.props.dispatch(addPostAsync(timestamp, title, body, author, category, id))
 
   }

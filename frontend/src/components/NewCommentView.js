@@ -11,11 +11,11 @@ class NewCommentView extends Component {
         id: '',
         author: '',
         body: '',
-        category: props.post.category,
+        parentId: props.post.id,
         timestamp: (new Date()).getTime()
       };
 
-      this.handleSubmit = this.handleSubmit.bind(this);
+      this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentDidMount() {
@@ -24,9 +24,8 @@ class NewCommentView extends Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    const { timestamp, body, author, category, id } = this.state;
-    console.log('this.state',this.state)
-    this.props.dispatch(addCommentAsync(timestamp, body, author, category, id))
+    const { id, timestamp, body, author, parentId } = this.state
+    this.props.dispatch(addCommentAsync(id, timestamp, body, author, parentId))
 
   }
 

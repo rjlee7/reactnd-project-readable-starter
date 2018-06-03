@@ -14,15 +14,13 @@ import FaTrash from 'react-icons/lib/fa/trash-o'
 class CommentView extends Component {
   state = {
     status: 'view',
-    body: null,
-    author: null
+    body: null
   }
 
   componentDidMount() {
     const { comment } = this.props
     this.setState({
-      body: comment.body,
-      author: comment.author
+      body: comment.body
     })
   }
 
@@ -33,20 +31,29 @@ class CommentView extends Component {
   }
 
   onEdit(value) {
-    //on keypress enter call saveEditedComment
+    this.setState({
+      body: value
+    })
   }
 
-  saveEditedComment() {
-
+  handleKeyPress = (event) => {
+    const { comment } = this.props
+    const { body } = this.state
+    if(event.key === 'Enter'){
+      this.setState({
+        status: 'view'
+      })
+      this.props.dispatch(updateCommentAsync(comment.id, (new Date()).getTime(), body))
+    }
   }
 
-  deleteComment() {
-
+  deleteComment(id) {
+    this.props.dispatch(deleteCommentAsync(id))
   }
 
   render() {
-    const { status, body, author } = this.state
-    const { comment, deleteComment, editComment } = this.props
+    const { status, body } = this.state
+    const { comment } = this.props
 
     return (
       <div>
@@ -60,18 +67,11 @@ class CommentView extends Component {
               className="input-text"
               defaultValue={body}
               onChange={(e) => this.onEdit(e.target.value)}
-              onBlur={() => this.setState({status: 'view'})}/>
+              onBlur={() => this.setState({status: 'view'})}
+              onKeyPress={this.handleKeyPress}/>
             }
           </div>
-          <div className="col-md-2">{
-            status === 'view' ? author :
-            <input
-              type="text"
-              className="input-text"
-              defaultValue={author}
-              onChange={(e) => this.onEdit(e.target.value)}
-              onBlur={() => this.setState({status: 'view'})}/>
-            }
+          <div className="col-md-2">{comment.author}
           </div>
           <div className="col-md-2">{formatDate(comment.timestamp)}</div>
           <div className="col-md-2">
