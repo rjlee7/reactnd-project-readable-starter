@@ -2,18 +2,14 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import {
-  receivePostAsync,
-  receiveCommentsAsync,
-  deletePostAsync,
   sortPostsByVote,
   sortPostsByName,
-  sortPostsByDate
+  sortPostsByDate,
+  votePostAsync
 } from '../actions'
 import { formatDate } from '../utils/helpers'
 import FaChevronUp from 'react-icons/lib/fa/chevron-up'
 import FaChevronDown from 'react-icons/lib/fa/chevron-down'
-import FaSort from 'react-icons/lib/fa/sort'
-import Loading from 'react-loading'
 
 class PostsView extends Component {
   state = {
@@ -24,8 +20,6 @@ class PostsView extends Component {
 
   render() {
     const { posts } = this.props
-    const { comments } = this.props.forum
-    const options = ['vote','author','date'];
 
     return (
       <div>
@@ -56,12 +50,27 @@ class PostsView extends Component {
                 <div className="row">
                   <div className="col-md-2">{post.voteScore}</div>
                   <div className="col-md-2">{post.category}</div>
-                  <div className="col-md-2"><Link to={{
-                    pathname: `/${post.category}/${post.id}`
-                  }}>{post.title}</Link></div>
+                  <div className="col-md-2">
+                    <Link to={{
+                      pathname: `/${post.category}/${post.id}`
+                    }}>{post.title}</Link>
+                  </div>
                   <div className="col-md-2">{post.author}</div>
                   <div className="col-md-2">{formatDate(post.timestamp)}</div>
-                  <div className="col-md-2"><button className="btn" type="button"><FaChevronUp /></button><button className="btn" type="button"><FaChevronDown /></button></div>
+                  <div className="col-md-2">
+                    <button
+                      className="btn"
+                      type="button"
+                      onClick={() => this.props.dispatch(votePostAsync(post.id, "upVote"))}>
+                      <FaChevronUp />
+                    </button>
+                    <button
+                      className="btn"
+                      type="button"
+                      onClick={() => this.props.dispatch(votePostAsync(post.id, "downVote"))}>
+                      <FaChevronDown />
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}

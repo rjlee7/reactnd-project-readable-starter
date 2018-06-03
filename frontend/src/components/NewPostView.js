@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 import { addPostAsync } from '../actions'
 import { uuidv4 } from '../utils/helpers'
 
@@ -13,7 +12,7 @@ class NewPostView extends Component {
         author: '',
         title: '',
         body: '',
-        category: '',
+        category: 'react',
         timestamp: (new Date()).getTime()
       };
 
@@ -21,13 +20,12 @@ class NewPostView extends Component {
   }
 
   componentDidMount() {
-    this.setState({id:uuidv4()})
+    this.setState({ id: uuidv4() })
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    const {timestamp,title,body,author,category,id} = this.state;
-    console.log('this.state',this.state)
+    const { timestamp, title, body, author, category, id } = this.state;
     this.props.dispatch(addPostAsync(timestamp, title, body, author, category, id))
 
   }
@@ -35,22 +33,49 @@ class NewPostView extends Component {
   render() {
     const options = ['react','redux','udacity'];
     return (
-      <form className="new-post" onSubmit={this.handleSubmit}>
+      <form
+        className="new-post"
+        onSubmit={this.handleSubmit}>
         <div className="form-group">
           <label htmlFor="author">Author</label>
-          <input type="text" value={this.state.author} onChange={(e) => this.setState({author:e.target.value})} className="form-control" id="author" aria-describedby="author"/>
+          <input
+            required
+            type="text"
+            value={this.state.author}
+            onChange={(e) => this.setState({author:e.target.value})}
+            className="form-control"
+            id="author"
+            aria-describedby="author"/>
         </div>
         <div className="form-group">
           <label htmlFor="title">Title</label>
-          <input type="text" value={this.state.title} onChange={(e) => this.setState({title:e.target.value})} className="form-control" id="title" aria-describedby="title"/>
+          <input
+            required
+            type="text"
+            value={this.state.title}
+            onChange={(e) => this.setState({title:e.target.value})}
+            className="form-control"
+            id="title"
+            aria-describedby="title"/>
         </div>
         <div className="form-group">
           <label htmlFor="body">Body</label>
-          <input type="text" value={this.state.body} onChange={(e) =>  this.setState({body:e.target.value})} className="form-control" id="body" aria-describedby="body"/>
+          <input
+            required
+            type="text"
+            value={this.state.body}
+            onChange={(e) =>  this.setState({body:e.target.value})}
+            className="form-control"
+            id="body"
+            aria-describedby="body"/>
         </div>
         <div className="form-group">
           <label htmlFor="category">Category</label>
-          <select className="form-control" id="category" onChange={(e) => this.setState({category: e.target.value})}>
+          <select
+            required
+            className="form-control"
+            id="category"
+            onChange={(e) => this.setState({category: e.target.value})}>
             {options.map(option => (
               <option value={option} key={option}>
                 {option}

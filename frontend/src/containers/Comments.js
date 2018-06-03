@@ -36,8 +36,8 @@ class Comment extends Component {
     console.log('comments',comments)
     return (
       <div className='container'>
-
-          {(comments && comments.length) ? comments.map(comment => (
+        {(comments && comments.length) ?
+          comments.map(comment => (
             <CommentView key={comment.id} comment={comment}/>
           )) : <div className="no-content">No comments for this post.</div>}
       </div>

@@ -1,20 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 import {
-  receivePostAsync,
-  receiveCommentsAsync,
   deletePostAsync,
-  sortPostsByVote,
-  sortPostsByName,
-  sortPostsByDate
 } from '../actions'
 import { formatDate } from '../utils/helpers'
-import FaChevronUp from 'react-icons/lib/fa/chevron-up'
-import FaChevronDown from 'react-icons/lib/fa/chevron-down'
 import FaAngleDown from 'react-icons/lib/fa/angle-down'
-import FaSort from 'react-icons/lib/fa/sort'
-import Loading from 'react-loading'
 import CommentView from './CommentView'
 import NewCommentView from './NewCommentView'
 import $ from 'jquery';
@@ -35,7 +25,10 @@ class PostView extends Component {
       <div className='post-table'>
         <div className="post-options">
           <button className="btn btn-secondary button-space" type="button">Edit Post</button>
-          <button className="btn btn-default" type="button">Delete Post</button>
+          <button
+            className="btn btn-default"
+            type="button"
+            onClick={() => this.props.dispatch(deletePostAsync(post.id))}>Delete Post</button>
         </div>
         <div>
           <h3>{post.title}</h3>
@@ -58,12 +51,18 @@ class PostView extends Component {
           {(comments && comments.length) ? comments.map(comment => (
             <CommentView key={comment.id} comment={comment}/>
           )) : <div className="no-content">No comments for this post.</div>}
-          <button className="btn btn-primary" type="button" data-toggle="collapse" data-target="#newComment" aria-expanded="false" aria-controls="newComment">
+          <button
+            className="btn btn-primary"
+            type="button"
+            data-toggle="collapse"
+            data-target="#newComment"
+            aria-expanded="false"
+            aria-controls="newComment">
             New Comment <FaAngleDown/>
           </button>
           <div className="collapse" id="newComment">
             <div className="card card-body">
-              <NewCommentView/>
+              <NewCommentView post={post}/>
             </div>
           </div>
         </div>

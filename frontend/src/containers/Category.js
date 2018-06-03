@@ -1,16 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 import {
-  receivePostsForCategoryAsync,
-  sortPostsByName,
-  sortPostsByDate,
-  sortPostsByVote
+  receivePostsForCategoryAsync
 } from '../actions'
-import FaChevronUp from 'react-icons/lib/fa/chevron-up'
-import FaChevronDown from 'react-icons/lib/fa/chevron-down'
-import FaSort from 'react-icons/lib/fa/sort'
-import { formatDate } from '../utils/helpers'
 import PostsView from '../components/PostsView'
 
 class Category extends Component {

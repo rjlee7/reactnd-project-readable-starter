@@ -8,6 +8,7 @@ export const ADD_POST = 'ADD_POST'
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const UPDATE_POST = 'UPDATE_POST'
 export const UPDATE_COMMENT = 'UPDATE_COMMENT'
+export const VOTE_POST = 'VOTE_POST'
 export const VOTE_COMMENT = 'VOTE_COMMENT'
 export const DELETE_POST = 'DELETE_POST'
 export const DELETE_COMMENT = 'DELETE_COMMENT'
@@ -122,6 +123,19 @@ export const updatePostAsync = (id, title, body) => dispatch => (
     .then(post => dispatch(updatePost(post)))
 )
 
+export function votePost (post) {
+  return {
+    type: VOTE_POST,
+    post
+  }
+}
+
+export const votePostAsync = (id, vote) => dispatch => (
+  APIUtil
+    .votePost(id, vote)
+    .then(post => dispatch(votePost(post)))
+)
+
 export function deletePost (post) {
   return {
     type: DELETE_POST,
@@ -170,9 +184,9 @@ export function voteComment (comment) {
   }
 }
 
-export const voteCommentAsync = (id, upVote, downVote) => dispatch => (
+export const voteCommentAsync = (id, vote) => dispatch => (
   APIUtil
-    .voteComment(id, upVote, downVote)
+    .voteComment(id, vote)
     .then(comment => dispatch(voteComment(comment)))
 )
 

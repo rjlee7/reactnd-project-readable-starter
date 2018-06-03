@@ -13,18 +13,21 @@ import {
   SORT_POSTS_BY_VOTE,
   ADD_COMMENT,
   DELETE_COMMENT,
-  UPDATE_COMMENT
+  UPDATE_COMMENT,
+  VOTE_POST,
+  VOTE_COMMENT
 } from '../actions'
 
 const initialForumState = {
   posts: [],
   categories: [],
   comments: [],
-  post: null
+  post: null,
+  comment: null
 }
 
 function forum (state = initialForumState, action) {
-  const { posts, categories, comments, post } = action
+  const { posts, categories, comments, post, comment } = action
 
   switch (action.type) {
     case RECEIVE_POSTS :
@@ -42,13 +45,6 @@ function forum (state = initialForumState, action) {
         ...state,
         comments
       }
-    case UPDATE_POST :
-      return {
-        ...state,
-        posts: state.posts.map(currentPost => {
-          return (currentPost.id === post.id) ? post : currentPost
-        })
-      }
     case RECEIVE_POST :
       return {
         ...state,
@@ -59,11 +55,52 @@ function forum (state = initialForumState, action) {
         ...state,
         posts: state.posts.concat([...post])
       }
+    case UPDATE_POST :
+      return {
+        ...state,
+        posts: state.posts.map(currentPost => {
+          return (currentPost.id === post.id) ? post : currentPost
+        })
+      }
+    case VOTE_POST :
+      return {
+        ...state,
+        posts: state.posts.map(currentPost => {
+          return (currentPost.id === post.id) ? post : currentPost
+        })
+      }
     case DELETE_POST :
       return {
         ...state,
         posts: state.posts.filter(currentPost=>{
+          console.log('delete post',post)
           return currentPost.id !== post.id
+        })
+      }
+    case ADD_COMMENT :
+      return {
+        ...state,
+        comments: state.comments.concat([...comment])
+      }
+    case UPDATE_COMMENT :
+      return {
+        ...state,
+        comments: state.comments.map(currentComment => {
+          return (currentComment.id === comment.id) ? comment : currentComment
+        })
+      }
+    case VOTE_COMMENT :
+      return {
+        ...state,
+        comments: state.comments.map(currentComment => {
+          return (currentComment.id === comment.id) ? comment : currentComment
+        })
+      }
+    case DELETE_COMMENT :
+      return {
+        ...state,
+        comments: state.comments.filter(currentComment=>{
+          return currentComment.id !== comment.id
         })
       }
     case SORT_POSTS_BY_NAME :
@@ -79,7 +116,7 @@ function forum (state = initialForumState, action) {
     case SORT_POSTS_BY_VOTE :
     return {
       ...state,
-      posts: state.posts.sort((a, b) => a.voteScore - b.voteScore)
+      posts: state.posts.sort((a, b) => b.voteScore - a.voteScore)
     }
     default :
       return state

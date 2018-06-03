@@ -1,11 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { deleteCommentAsync, updateCommentAsync, voteCommentAsync } from '../actions'
-import { formatDate } from '../utils/helpers'
-import FaChevronUp from 'react-icons/lib/fa/chevron-up'
-import FaChevronDown from 'react-icons/lib/fa/chevron-down'
-import Loading from 'react-loading'
 import { receiveCategoriesAsync } from '../actions'
 
 class NavbarView extends Component {
