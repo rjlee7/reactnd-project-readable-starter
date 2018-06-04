@@ -4,7 +4,7 @@ import { addPostAsync } from '../actions'
 import NewPostView from '../components/NewPostView'
 
 class NewPost extends Component {
-  
+
   addPost = (timestamp, title, body, author, category, id) => {
     this.props.dispatch(addPostAsync(timestamp, title, body, author, category, id))
     this.props.history.push("/")
@@ -12,8 +12,7 @@ class NewPost extends Component {
 
   render() {
     return (
-        <NewPostView
-          addPost={this.addPost}/>
+        <NewPostView addPost={this.addPost}/>
     )
   }
 }

@@ -5,7 +5,6 @@ import {
   RECEIVE_CATEGORIES,
   RECEIVE_COMMENTS,
   RECEIVE_POST,
-  // RECEIVE_POST_FAIL,
   ADD_POST,
   DELETE_POST,
   UPDATE_POST,
@@ -17,30 +16,32 @@ import {
   UPDATE_COMMENT,
   VOTE_POST,
   VOTE_COMMENT,
-  // RESET_ERROR_MESSAGE
+  RESET_ERROR_MESSAGE
 } from '../actions'
 
+const initialErrorMessageState = {
+  error: ''
+}
 const initialForumState = {
   posts: [],
   categories: [],
   comments: [],
   post: null,
-  comment: null,
-  // error: null
+  comment: null
 }
 
-// Updates error message to notify about the failed fetches.
-// function errorMessage(state = null, action) {
-//   const { type, error } = action
-//
-//   if (type === RESET_ERROR_MESSAGE) {
-//     return null
-//   } else if (error) {
-//     return action.error
-//   }
-//
-//   return state
-// }
+//Updates error message to notify about the failed fetches.
+function errorMessage(state = initialErrorMessageState, action) {
+  const { type, error } = action
+  if (type === RESET_ERROR_MESSAGE) {
+    return {
+      error: ''
+    }
+  } else if (error) {
+    return { error }
+  }
+  return state
+}
 
 function forum (state = initialForumState, action) {
   const { posts, categories, comments, post, comment } = action
@@ -66,11 +67,6 @@ function forum (state = initialForumState, action) {
         ...state,
         post
       }
-    // case RECEIVE_POST_FAIL :
-    //   return {
-    //     ...state,
-    //     error
-    //   }
     case ADD_POST :
       return {
         ...state,
@@ -153,5 +149,5 @@ function forum (state = initialForumState, action) {
 
 export default combineReducers({
   forum,
-  // errorMessage
+  errorMessage
 })

@@ -39,7 +39,8 @@ class Category extends Component {
   }
 
   render() {
-    const { posts } = this.props.forum
+    const { posts } = this.props
+
     return (
       posts && posts.length ? (
         <PostsView
@@ -53,7 +54,7 @@ class Category extends Component {
   }
 }
 
-const mapStateToProps = ({ forum }) => ({ forum })
+const mapStateToProps = ({ forum }) => ({ posts: forum.posts })
 
 export default connect(
   mapStateToProps,

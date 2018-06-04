@@ -12,8 +12,7 @@ class Navbar extends Component {
     const { categories } = this.props
     return (
       (categories && categories.length) ?
-        <NavbarView
-          categories={categories}/> : null
+        <NavbarView categories={categories}/> : null
     )
   }
 }

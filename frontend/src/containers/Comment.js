@@ -19,30 +19,22 @@ class Comment extends Component {
 
   componentDidMount() {
     const { commentDetail } = this.props
-    this.setState({
-      body: commentDetail.body
-    })
+    this.setState({ body: commentDetail.body })
   }
 
   editComment() {
-    this.setState({
-      status: 'edit'
-    })
+    this.setState({ status: 'edit' })
   }
 
   onEdit(value) {
-    this.setState({
-      body: value
-    })
+    this.setState({ body: value })
   }
 
   handleKeyPress = (event) => {
     const { commentDetail } = this.props
     const { body } = this.state
     if(event.key === 'Enter'){
-      this.setState({
-        status: 'view'
-      })
+      this.setState({ status: 'view' })
       this.props.dispatch(updateCommentAsync(commentDetail.id, (new Date()).getTime(), body))
     }
   }

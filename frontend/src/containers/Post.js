@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import {
   updatePostAsync,
@@ -26,19 +27,24 @@ class Post extends Component {
 
   render() {
     const { post, comments } = this.props.forum
+    const { error } = this.props.errorMessage
     return (
-      post ?
+      <div>
+        {error && <Redirect to="/notfound"/>}
+        {post ?
         <PostView
           post={post}
           editPost={this.editPost}
           deletePost={this.deletePost}
           comments={comments}/> : null
+        }
+      </div>
 
     )
   }
 }
 
-const mapStateToProps = ({ forum }) => ({ forum })
+const mapStateToProps = ({ forum, errorMessage }) => ({ forum, errorMessage })
 
 export default connect(
   mapStateToProps,

@@ -3,6 +3,7 @@ import * as APIUtil from '../utils/api'
 export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES'
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'
 export const RECEIVE_POST = 'RECEIVE_POST'
+export const RECEIVE_POST_FAIL = 'RECEIVE_POST_FAIL'
 export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS'
 export const ADD_POST = 'ADD_POST'
 export const ADD_COMMENT = 'ADD_COMMENT'
@@ -15,6 +16,11 @@ export const DELETE_COMMENT = 'DELETE_COMMENT'
 export const SORT_POSTS_BY_NAME = 'SORT_POSTS_BY_NAME'
 export const SORT_POSTS_BY_DATE = 'SORT_POSTS_BY_DATE'
 export const SORT_POSTS_BY_VOTE = 'SORT_POSTS_BY_VOTE'
+export const RESET_ERROR_MESSAGE = 'RESET_ERROR_MESSAGE'
+
+export const resetErrorMessage = () => ({
+    type: RESET_ERROR_MESSAGE
+})
 
 export function sortPostsByName (posts = []) {
   return {
@@ -58,10 +64,22 @@ export function receivePost (post) {
   }
 }
 
+export function receivePostFail (error) {
+  return {
+    type: RECEIVE_POST_FAIL,
+    error
+  }
+}
+
 export const receivePostAsync = (post_id) => dispatch => (
   APIUtil
     .getPost(post_id)
-    .then(post => dispatch(receivePost(post)))
+    .then(post => {
+      return dispatch(receivePost(post))
+    })
+    .catch(error => {
+      return dispatch(receivePostFail(error))
+    })
 )
 
 export const receivePostForCategoryAsync = (category, post_id) => dispatch => (
