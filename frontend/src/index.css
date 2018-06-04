@@ -20,7 +20,7 @@ li {
 }
 
 .post-table {
-  padding: 50px;
+  padding: 30px;
   width: 100%;
 }
 
@@ -69,12 +69,12 @@ li {
 }
 
 .comment-block {
-  padding: 50px;
+  padding: 30px;
 }
 
 .post-options {
   text-align: right;
-  margin: 50px 0px;
+  margin: 10px 0px;
 }
 
 .button-space {

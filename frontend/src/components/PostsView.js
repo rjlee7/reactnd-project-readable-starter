@@ -5,12 +5,6 @@ import FaChevronUp from 'react-icons/lib/fa/chevron-up'
 import FaChevronDown from 'react-icons/lib/fa/chevron-down'
 
 class PostsView extends Component {
-  state = {
-  }
-
-  componentDidMount() {
-  }
-
   render() {
     const { posts, votePostAsync, sortPostsByVote, sortPostsByName, sortPostsByDate} = this.props
 

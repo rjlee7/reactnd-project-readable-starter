@@ -3,7 +3,7 @@ import { uuidv4 } from '../utils/helpers'
 
 class NewPostView extends Component {
   constructor(props) {
-      super(props);
+      super(props)
 
       this.state = {
         id: '',
@@ -12,16 +12,14 @@ class NewPostView extends Component {
         body: '',
         category: 'react',
         timestamp: (new Date()).getTime()
-      };
-
-      this.handleSubmit = this.handleSubmit.bind(this)
+      }
   }
 
   componentDidMount() {
     this.setState({ id: uuidv4() })
   }
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     event.preventDefault()
     const { addPost } = this.props
     const { timestamp, title, body, author, category, id } = this.state

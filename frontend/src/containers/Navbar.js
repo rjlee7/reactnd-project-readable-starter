@@ -9,8 +9,7 @@ class Navbar extends Component {
   }
 
   render() {
-    console.log('this.props.forum',this.props.forum)
-    const { categories } = this.props.forum
+    const { categories } = this.props
     return (
       (categories && categories.length) ?
         <NavbarView
@@ -19,11 +18,7 @@ class Navbar extends Component {
   }
 }
 
-function mapStateToProps ({ forum }) {
-  return {
-    forum
-  }
-}
+const mapStateToProps = ({ forum }) => ({ categories: forum.categories })
 
 export default connect(
   mapStateToProps,

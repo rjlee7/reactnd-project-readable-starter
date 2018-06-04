@@ -4,12 +4,8 @@ import { addPostAsync } from '../actions'
 import NewPostView from '../components/NewPostView'
 
 class NewPost extends Component {
-  constructor(props) {
-    super(props)
-    this.addPost = this.addPost.bind(this)
-  }
-
-  addPost(timestamp, title, body, author, category, id) {
+  
+  addPost = (timestamp, title, body, author, category, id) => {
     this.props.dispatch(addPostAsync(timestamp, title, body, author, category, id))
     this.props.history.push("/")
   }
@@ -22,11 +18,7 @@ class NewPost extends Component {
   }
 }
 
-function mapStateToProps ({ forum }) {
-  return {
-    forum
-  }
-}
+const mapStateToProps = ({ forum }) => ({ forum })
 
 export default connect(
   mapStateToProps,

@@ -10,27 +10,19 @@ import {
 } from '../actions'
 
 class Main extends Component {
-  constructor(props) {
-    super(props)
-    this.votePostAsync = this.votePostAsync.bind(this)
-    this.sortPostsByVote = this.sortPostsByVote.bind(this)
-    this.sortPostsByName = this.sortPostsByName.bind(this)
-    this.sortPostsByDate = this.sortPostsByDate.bind(this)
-  }
-
-  votePostAsync(id, option) {
+  votePostAsync = (id, option) => {
     this.props.dispatch(votePostAsync(id, option))
   }
 
-  sortPostsByVote() {
+  sortPostsByVote = () => {
     this.props.dispatch(sortPostsByVote())
   }
 
-  sortPostsByName() {
+  sortPostsByName = () => {
     this.props.dispatch(sortPostsByName())
   }
 
-  sortPostsByDate() {
+  sortPostsByDate = () => {
     this.props.dispatch(sortPostsByDate())
   }
 
@@ -39,7 +31,7 @@ class Main extends Component {
   }
 
   render() {
-    const { posts } = this.props.forum
+    const { posts } = this.props
 
     return (
       <div className='forum'>
@@ -54,11 +46,7 @@ class Main extends Component {
   }
 }
 
-function mapStateToProps ({ forum }) {
-  return {
-    forum
-  }
-}
+const mapStateToProps = ({ forum }) => ({ posts: forum.posts })
 
 export default connect(
   mapStateToProps,

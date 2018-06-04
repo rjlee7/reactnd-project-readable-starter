@@ -18,9 +18,9 @@ class Comment extends Component {
   }
 
   componentDidMount() {
-    const { comment } = this.props
+    const { commentDetail } = this.props
     this.setState({
-      body: comment.body
+      body: commentDetail.body
     })
   }
 
@@ -37,13 +37,13 @@ class Comment extends Component {
   }
 
   handleKeyPress = (event) => {
-    const { comment } = this.props
+    const { commentDetail } = this.props
     const { body } = this.state
     if(event.key === 'Enter'){
       this.setState({
         status: 'view'
       })
-      this.props.dispatch(updateCommentAsync(comment.id, (new Date()).getTime(), body))
+      this.props.dispatch(updateCommentAsync(commentDetail.id, (new Date()).getTime(), body))
     }
   }
 
@@ -53,13 +53,13 @@ class Comment extends Component {
 
   render() {
     const { status, body } = this.state
-    const { comment } = this.props
+    const { commentDetail } = this.props
 
     return (
       <div>
-        {comment ? (
+        {commentDetail ? (
         <div className="row">
-          <div className="col-md-2">{comment.voteScore}</div>
+          <div className="col-md-2">{commentDetail.voteScore}</div>
           <div className="col-md-2">{
             status === 'view' ? body :
             <input
@@ -71,20 +71,20 @@ class Comment extends Component {
               onKeyPress={this.handleKeyPress}/>
             }
           </div>
-          <div className="col-md-2">{comment.author}
+          <div className="col-md-2">{commentDetail.author}
           </div>
-          <div className="col-md-2">{formatDate(comment.timestamp)}</div>
+          <div className="col-md-2">{formatDate(commentDetail.timestamp)}</div>
           <div className="col-md-2">
             <button
               className="btn btn-secondary button-space"
               type="button"
-              onClick={() => this.editComment(comment.id)}>
+              onClick={() => this.editComment(commentDetail.id)}>
               <FaEdit/>
             </button>
             <button
               className="btn btn-default"
               type="button"
-              onClick={() => this.deleteComment(comment.id)}>
+              onClick={() => this.deleteComment(commentDetail.id)}>
               <FaTrash/>
             </button>
           </div>
@@ -92,13 +92,13 @@ class Comment extends Component {
             <button
               className="btn"
               type="button"
-              onClick={() => this.props.dispatch(voteCommentAsync(comment.id, "upVote"))}>
+              onClick={() => this.props.dispatch(voteCommentAsync(commentDetail.id, "upVote"))}>
               <FaChevronUp/>
             </button>
             <button
               className="btn"
               type="button"
-              onClick={() => this.props.dispatch(voteCommentAsync(comment.id, "upVote"))}>
+              onClick={() => this.props.dispatch(voteCommentAsync(commentDetail.id, "upVote"))}>
               <FaChevronDown/>
             </button>
           </div>
@@ -108,12 +108,5 @@ class Comment extends Component {
   }
 }
 
-function mapStateToProps ({ forum }) {
-  return {
-    forum
-  }
-}
 
-export default connect(
-  mapStateToProps,
-)(Comment)
+export default connect()(Comment)

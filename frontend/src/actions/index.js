@@ -5,6 +5,8 @@ export const RECEIVE_POSTS = 'RECEIVE_POSTS'
 export const RECEIVE_POST = 'RECEIVE_POST'
 export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS'
 export const ADD_POST = 'ADD_POST'
+export const ADD_COMMENT = 'ADD_COMMENT'
+export const UPDATE_POST = 'UPDATE_POST'
 export const UPDATE_COMMENT = 'UPDATE_COMMENT'
 export const VOTE_POST = 'VOTE_POST'
 export const VOTE_COMMENT = 'VOTE_COMMENT'
@@ -55,12 +57,11 @@ export function receivePost (post) {
     post
   }
 }
+
 export const receivePostAsync = (post_id) => dispatch => (
   APIUtil
     .getPost(post_id)
-    .then(post => {
-      dispatch(receivePost(post))
-    })
+    .then(post => dispatch(receivePost(post)))
 )
 
 export const receivePostForCategoryAsync = (category, post_id) => dispatch => (
@@ -108,10 +109,17 @@ export const addPostAsync = (timestamp, title, body, author, category, id) => di
     .then(post => dispatch(addPost(post)))
 )
 
+export function updatePost (post) {
+  return {
+    type: UPDATE_POST,
+    post
+  }
+}
+
 export const updatePostAsync = (id, title, body) => dispatch => (
   APIUtil
     .updatePost(id, title, body)
-    .then(post => dispatch(receivePostAsync(id)))
+    .then(post => dispatch(updatePost(post)))
 )
 
 export function votePost (post) {
@@ -155,10 +163,17 @@ export const receiveCommentsAsync = (post_id) => dispatch => (
     })
 )
 
+export function addComment (comment) {
+  return {
+    type: ADD_COMMENT,
+    comment
+  }
+}
+
 export const addCommentAsync = (id, timestamp, body, author, parentId) => dispatch => (
   APIUtil
     .addComment(id, timestamp, body, author, parentId)
-    .then(comment => dispatch(receiveCommentsAsync(parentId)))
+    .then(comment => dispatch(addComment(comment)))
 )
 
 export function voteComment (comment) {

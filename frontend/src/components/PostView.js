@@ -96,7 +96,9 @@ class PostView extends Component {
             </div>
           ) : null}
           {(comments && comments.length) ? comments.map(comment => (
-            <Comment key={comment.id} comment={comment}/>
+            <Comment
+              key={comment.id}
+              commentDetail={comment}/>
           )) : <div className="no-content">No comments for this post.</div>}
           <button
             type="button"

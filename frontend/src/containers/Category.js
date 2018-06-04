@@ -10,39 +10,31 @@ import {
 import PostsView from '../components/PostsView'
 
 class Category extends Component {
-  constructor(props) {
-    super(props)
-    this.votePostAsync = this.votePostAsync.bind(this)
-    this.sortPostsByVote = this.sortPostsByVote.bind(this)
-    this.sortPostsByName = this.sortPostsByName.bind(this)
-    this.sortPostsByDate = this.sortPostsByDate.bind(this)
-  }
-
   componentDidMount() {
-    let category = this.props.match.params.category;
+    const category = this.props.match.params.category;
     this.props.dispatch(receivePostsForCategoryAsync(category))
   }
 
   componentDidUpdate(prevProps) {
-    let category = this.props.match.params.category;
+    const category = this.props.match.params.category;
     if (category !== prevProps.match.params.category) {
       this.props.dispatch(receivePostsForCategoryAsync(category))
     }
   }
 
-  votePostAsync(id, option) {
+  votePostAsync = (id, option) => {
     this.props.dispatch(votePostAsync(id, option))
   }
 
-  sortPostsByVote() {
+  sortPostsByVote = () => {
     this.props.dispatch(sortPostsByVote())
   }
 
-  sortPostsByName() {
+  sortPostsByName = () => {
     this.props.dispatch(sortPostsByName())
   }
 
-  sortPostsByDate() {
+  sortPostsByDate = () => {
     this.props.dispatch(sortPostsByDate())
   }
 
@@ -61,11 +53,7 @@ class Category extends Component {
   }
 }
 
-function mapStateToProps ({ forum }) {
-  return {
-    forum
-  }
-}
+const mapStateToProps = ({ forum }) => ({ forum })
 
 export default connect(
   mapStateToProps,

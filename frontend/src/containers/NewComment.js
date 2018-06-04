@@ -14,15 +14,13 @@ class NewComment extends Component {
         parentId: props.post.id,
         timestamp: (new Date()).getTime()
       };
-
-      this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
     this.setState({ id: uuidv4() })
   }
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     event.preventDefault()
     const { id, timestamp, body, author, parentId } = this.state;
     this.props.dispatch(addCommentAsync(id, timestamp, body, author, parentId))
@@ -69,13 +67,4 @@ class NewComment extends Component {
   }
 }
 
-
-function mapStateToProps ({ forum }) {
-  return {
-    forum
-  }
-}
-
-export default connect(
-  mapStateToProps,
-)(NewComment)
+export default connect()(NewComment)

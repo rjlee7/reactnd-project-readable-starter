@@ -5,15 +5,19 @@ import {
   RECEIVE_CATEGORIES,
   RECEIVE_COMMENTS,
   RECEIVE_POST,
+  // RECEIVE_POST_FAIL,
   ADD_POST,
   DELETE_POST,
+  UPDATE_POST,
   SORT_POSTS_BY_NAME,
   SORT_POSTS_BY_DATE,
   SORT_POSTS_BY_VOTE,
+  ADD_COMMENT,
   DELETE_COMMENT,
   UPDATE_COMMENT,
   VOTE_POST,
-  VOTE_COMMENT
+  VOTE_COMMENT,
+  // RESET_ERROR_MESSAGE
 } from '../actions'
 
 const initialForumState = {
@@ -21,8 +25,22 @@ const initialForumState = {
   categories: [],
   comments: [],
   post: null,
-  comment: null
+  comment: null,
+  // error: null
 }
+
+// Updates error message to notify about the failed fetches.
+// function errorMessage(state = null, action) {
+//   const { type, error } = action
+//
+//   if (type === RESET_ERROR_MESSAGE) {
+//     return null
+//   } else if (error) {
+//     return action.error
+//   }
+//
+//   return state
+// }
 
 function forum (state = initialForumState, action) {
   const { posts, categories, comments, post, comment } = action
@@ -48,10 +66,23 @@ function forum (state = initialForumState, action) {
         ...state,
         post
       }
+    // case RECEIVE_POST_FAIL :
+    //   return {
+    //     ...state,
+    //     error
+    //   }
     case ADD_POST :
       return {
         ...state,
-        posts: state.posts.concat([...post])
+        posts: state.posts.concat([{...post}])
+      }
+    case UPDATE_POST :
+      return {
+        ...state,
+        posts: state.posts.map(currentPost => {
+          return (currentPost.id === post.id) ? post : currentPost
+        }),
+        post
       }
     case VOTE_POST :
       return {
@@ -66,6 +97,11 @@ function forum (state = initialForumState, action) {
         posts: state.posts.filter(currentPost=>{
           return currentPost.id !== post.id
         })
+      }
+    case ADD_COMMENT :
+      return {
+        ...state,
+        comments: state.comments.concat([{...comment}])
       }
     case UPDATE_COMMENT :
       return {
@@ -116,5 +152,6 @@ function forum (state = initialForumState, action) {
 }
 
 export default combineReducers({
-  forum
+  forum,
+  // errorMessage
 })
