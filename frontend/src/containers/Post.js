@@ -30,7 +30,7 @@ class Post extends Component {
     const { error } = this.props.errorMessage
     return (
       <div>
-        {error && <Redirect to="/notfound"/>}
+        {(error || !post) && <Redirect to="/notfound"/>}
         {post ?
         <PostView
           post={post}
