@@ -123,7 +123,7 @@ function forum (state = initialForumState, action) {
     case SORT_POSTS_BY_NAME :
       return {
         ...state,
-        posts: state.posts.sort((a, b) => {
+        posts: [...state.posts].sort((a, b) => {
           const nameA = a.author.toLowerCase()
           const nameB = b.author.toLowerCase()
           if(nameA > nameB) return 1
@@ -135,12 +135,12 @@ function forum (state = initialForumState, action) {
     case SORT_POSTS_BY_DATE :
       return {
         ...state,
-        posts: state.posts.sort((a, b) => a.timestamp - b.timestamp)
+        posts: [...state.posts].sort((a, b) => a.timestamp - b.timestamp)
     }
     case SORT_POSTS_BY_VOTE :
     return {
       ...state,
-      posts: state.posts.sort((a, b) => b.voteScore - a.voteScore)
+      posts: [...state.posts].sort((a, b) => b.voteScore - a.voteScore)
     }
     default :
       return state
