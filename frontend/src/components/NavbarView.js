@@ -14,7 +14,11 @@ class NavbarView extends Component {
             <Link className="nav-link" to={`/${category.path}`}>{category.name}</Link>
           </li>
         ))}
-
+        <li className="navbar-right">
+          <Link to={{
+          pathname: `/new-post`
+        }}><button className="btn btn-primary" type="button">New Post</button></Link>
+        </li>
         </ul>
       </nav>
     )

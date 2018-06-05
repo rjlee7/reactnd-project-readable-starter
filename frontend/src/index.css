@@ -74,7 +74,7 @@ li {
 
 .post-options {
   text-align: right;
-  margin: 10px 0px;
+  margin: 10px 100px;
 }
 
 .button-space {
@@ -84,4 +84,9 @@ li {
 .post-details {
   margin-top: 20px;
   margin-left: 50px;
+}
+
+.navbar-right {
+  position: absolute;
+  right: 100px;
 }

@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import PostsView from '../components/PostsView'
+import PostsListView from '../components/PostsListView'
 import {
   receivePostsAsync,
   sortPostsByVote,
   sortPostsByName,
   sortPostsByDate,
-  votePostAsync
+  votePostAsync,
+  updatePostAsync,
+  deletePostAsync
 } from '../actions'
 
 class Main extends Component {
@@ -26,6 +28,14 @@ class Main extends Component {
     this.props.dispatch(sortPostsByDate())
   }
 
+  editPost = (id, title, body) => {
+    this.props.dispatch(updatePostAsync(id, title, body))
+  }
+
+  deletePost = (id) => {
+    this.props.dispatch(deletePostAsync(id))
+  }
+
   componentDidMount() {
     this.props.dispatch(receivePostsAsync())
   }
@@ -35,12 +45,15 @@ class Main extends Component {
 
     return (
       <div className='forum'>
-        <PostsView
+        <PostsListView
           posts={posts}
           votePostAsync={this.votePostAsync}
           sortPostsByVote={this.sortPostsByVote}
           sortPostsByName={this.sortPostsByName}
-          sortPostsByDate={this.sortPostsByDate}/>
+          sortPostsByDate={this.sortPostsByDate}
+          editPost={this.editPost}
+          deletePost={this.deletePost}
+        />
       </div>
     )
   }

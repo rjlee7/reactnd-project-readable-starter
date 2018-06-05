@@ -5,9 +5,11 @@ import {
   sortPostsByVote,
   sortPostsByName,
   sortPostsByDate,
-  votePostAsync
+  votePostAsync,
+  updatePostAsync,
+  deletePostAsync
 } from '../actions'
-import PostsView from '../components/PostsView'
+import PostsListView from '../components/PostsListView'
 
 class Category extends Component {
   componentDidMount() {
@@ -38,17 +40,28 @@ class Category extends Component {
     this.props.dispatch(sortPostsByDate())
   }
 
+  editPost = (id, title, body) => {
+    this.props.dispatch(updatePostAsync(id, title, body))
+  }
+
+  deletePost = (id) => {
+    this.props.dispatch(deletePostAsync(id))
+  }
+
   render() {
     const { posts } = this.props
 
     return (
       posts && posts.length ? (
-        <PostsView
+        <PostsListView
           posts={posts}
           votePostAsync={this.votePostAsync}
           sortPostsByVote={this.sortPostsByVote}
           sortPostsByName={this.sortPostsByName}
-          sortPostsByDate={this.sortPostsByDate}/>
+          sortPostsByDate={this.sortPostsByDate}
+          editPost={this.editPost}
+          deletePost={this.deletePost}
+        />
       ) : <div className="no-content">No posts for this category.</div>
     )
   }

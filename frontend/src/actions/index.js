@@ -22,21 +22,21 @@ export const resetErrorMessage = () => ({
     type: RESET_ERROR_MESSAGE
 })
 
-export function sortPostsByName (posts = []) {
+export function sortPostsByName (posts) {
   return {
     type: SORT_POSTS_BY_NAME,
     posts
   }
 }
 
-export function sortPostsByDate (posts = []) {
+export function sortPostsByDate (posts) {
   return {
     type: SORT_POSTS_BY_DATE,
     posts
   }
 }
 
-export function sortPostsByVote (posts = []) {
+export function sortPostsByVote (posts) {
   return {
     type: SORT_POSTS_BY_VOTE,
     posts
@@ -88,7 +88,7 @@ export const receivePostForCategoryAsync = (category, post_id) => dispatch => (
     .then(post => dispatch(receivePost(post)))
 )
 
-export function receivePostsForCategory (posts = []) {
+export function receivePostsForCategory (posts) {
   return {
     type: RECEIVE_POSTS,
     posts
@@ -101,7 +101,7 @@ export const receivePostsForCategoryAsync = (category) => dispatch => (
     .then(posts => dispatch(receivePostsForCategory(posts)))
 )
 
-export function receivePosts (posts = []) {
+export function receivePosts (posts) {
   return {
     type: RECEIVE_POSTS,
     posts
