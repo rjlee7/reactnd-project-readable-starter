@@ -1,57 +1,55 @@
 import React, { Component } from 'react'
 import { formatDate } from '../utils/helpers'
+import { connect } from 'react-redux'
 import FaChevronUp from 'react-icons/lib/fa/chevron-up'
 import FaChevronDown from 'react-icons/lib/fa/chevron-down'
 import FaEdit from 'react-icons/lib/fa/edit'
 import FaTrash from 'react-icons/lib/fa/trash-o'
 import { Link } from 'react-router-dom'
+import * as actions from '../actions'
 
 class PostsListView extends Component {
   state = {}
 
-  startEditing(id) {
-    this.setState({[id]:{status: 'edit'}})
+  startEditing(post) {
+    const { postsForm } = this.props
+    this.props.startEditingPostsForm(postsForm, post)
   }
 
-  onChange(id, name, value) {
-    this.setState({[id]:{[name]: value}})
+  onChange(post, name, value) {
+    const { postsForm } = this.props
+    this.props.onEditingPostsForm(postsForm, post, name, value)
   }
 
-  handleKeyPress = (event, id) => {
-    const { editPost } = this.props
+  handleKeyPress = (event, post) => {
+    const { postsForm, editPost } = this.props
     if(event.key === 'Enter'){
-      this.setState({[id]:{status: 'view'}})
-      editPost(id, this.state[id].title, this.state[id].body)
+      this.props.onKeypressPostsForm(postsForm, post)
+      editPost(post.id, postsForm[post.id].title, postsForm[post.id].body)
     }
   }
 
-  setPostState = (posts) => {
-    let obj = {}
-    posts.forEach(a => {
-      if(!obj[a.id]) obj[a.id] = {}
-      obj[a.id].status = 'view'
-      obj[a.id].title = a.title
-      obj[a.id].body = a.body
-    })
-    this.setState(obj)
+  onBlur(event, post) {
+    const { postsForm } = this.props
+    this.props.onBlurPostsForm(postsForm, post)
   }
 
   componentDidMount() {
-    const { posts } = this.props
-    this.setPostState(posts)
+    const { postsForm, posts } = this.props
+    this.props.receivePostsForm(postsForm, posts)
   }
 
   componentDidUpdate(prevProps) {
-    const { posts } = this.props
+    const { posts, postsForm } = this.props
     if (posts !== prevProps.posts) {
-      this.setPostState(posts)
+      this.props.receivePostsForm(postsForm, posts)
     }
   }
-
 
   render() {
     const {
       posts,
+      postsForm,
       votePostAsync,
       sortPostsByVote,
       sortPostsByName,
@@ -88,7 +86,7 @@ class PostsListView extends Component {
                   <div className="col-md-1">{post.category}</div>
                   <div className="col-md-2">
                     {
-                      this.state[post.id] && this.state[post.id].status === 'view' ? (
+                      postsForm[post.id] && postsForm[post.id].status !== 'edit' ? (
                       <span>
                         <Link to={{ pathname: `/${post.category}/${post.id}`}}>{post.title}</Link>
                         ({post.commentCount})
@@ -99,9 +97,9 @@ class PostsListView extends Component {
                         className="input-text"
                         defaultValue={post.title}
                         name="title"
-                        onChange={(e) => this.onChange(post.id, e.target.name, e.target.value)}
-                        onBlur={() => this.setState({[post.id]:{status: 'view'}})}
-                        onKeyPress={(e) => this.handleKeyPress(e, post.id)}/>
+                        onChange={(e) => this.onChange(post, e.target.name, e.target.value)}
+                        onBlur={(e) => this.onBlur(e, post)}
+                        onKeyPress={(e) => this.handleKeyPress(e, post)}/>
                       }
                   </div>
                   <div className="col-md-2">{post.author}</div>
@@ -124,7 +122,7 @@ class PostsListView extends Component {
                     <button
                       className="btn btn-secondary button-space"
                       type="button"
-                      onClick={() => this.startEditing(post.id)}>
+                      onClick={() => this.startEditing(post)}>
                       <FaEdit/>
                     </button>
                     <button
@@ -143,4 +141,6 @@ class PostsListView extends Component {
   }
 }
 
-export default PostsListView
+const mapStateToProps = ({ formReducer }) => ({ postsForm: formReducer.postsForm })
+
+export default connect(mapStateToProps, actions)(PostsListView)

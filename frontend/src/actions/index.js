@@ -5,6 +5,48 @@ export const resetErrorMessage = () => ({
     type: actionTypes.RESET_ERROR_MESSAGE
 })
 
+export function receivePostsForm (postsForm = {}, posts = []) {
+  return {
+    type: actionTypes.RECEIVE_POSTS_FORM,
+    postsForm,
+    posts
+  }
+}
+
+export function startEditingPostsForm (postsForm = {}, post = {}) {
+  return {
+    type: actionTypes.START_EDITING_POSTS_FORM,
+    postsForm,
+    post
+  }
+}
+
+export function onEditingPostsForm (postsForm = {}, post = {}, name = '', value = '') {
+  return {
+    type: actionTypes.ON_EDITING_POSTS_FORM,
+    postsForm,
+    post,
+    name,
+    value
+  }
+}
+
+export function onKeypressPostsForm (postsForm = {}, post = {}) {
+  return {
+    type: actionTypes.ON_KEYPRESS_POSTS_FORM,
+    postsForm,
+    post
+  }
+}
+
+export function onBlurPostsForm (postsForm = {}, post = {}) {
+  return {
+    type: actionTypes.ON_BLUR_POSTS_FORM,
+    postsForm,
+    post
+  }
+}
+
 export function sortPostsByName (posts = []) {
   return {
     type: actionTypes.SORT_POSTS_BY_NAME,
