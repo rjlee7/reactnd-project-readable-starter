@@ -32,6 +32,14 @@ class Category extends Component {
     this.props.sortPostsByDate()
   }
 
+  editPost = (id, title, body) => {
+    this.props.updatePostAsync(id, title, body)
+  }
+
+  deletePost = (id) => {
+    this.props.deletePostAsync(id)
+  }
+  
   render() {
     const { posts } = this.props
 
@@ -43,6 +51,8 @@ class Category extends Component {
           sortPostsByVote={this.sortPostsByVote}
           sortPostsByName={this.sortPostsByName}
           sortPostsByDate={this.sortPostsByDate}
+          editPost={this.editPost}
+          deletePost={this.deletePost}
         />
       ) : <div className="no-content">No posts for this category.</div>
     )
