@@ -16,7 +16,7 @@ class App extends Component {
   }
 
   renderErrorMessage() {
-    const { error } = this.props.errorMessage
+    const { error } = this.props.errorReducer
     if (!error) {
       return null
     }
@@ -59,7 +59,7 @@ class App extends Component {
 }
 
 
-const mapStateToProps = ({ errorMessage }) => ({ errorMessage })
+const mapStateToProps = ({ errorReducer }) => ({ errorReducer })
 
 export default withRouter(connect(mapStateToProps, {
   resetErrorMessage

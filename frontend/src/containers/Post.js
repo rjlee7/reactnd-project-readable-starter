@@ -1,36 +1,31 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-import {
-  updatePostAsync,
-  deletePostAsync,
-  receivePostAsync,
-  receiveCommentsAsync
-} from '../actions'
+import * as actions from '../actions'
 import PostView from '../components/PostView'
 
 class Post extends Component {
   componentDidMount() {
     const post_id = this.props.match.params.post_id
-    this.props.dispatch(receivePostAsync(post_id))
-    this.props.dispatch(receiveCommentsAsync(post_id))
+    this.props.receivePostAsync(post_id)
+    this.props.receiveCommentsAsync(post_id)
   }
 
   deletePost = (id) => {
-    this.props.dispatch(deletePostAsync(id))
+    this.props.deletePostAsync(id)
     this.props.history.push("/")
   }
 
   editPost = (id, title, body) => {
-    this.props.dispatch(updatePostAsync(id, title, body))
+    this.props.updatePostAsync(id, title, body)
   }
 
   render() {
-    const { post, comments } = this.props.forum
-    const { error } = this.props.errorMessage
+    const { post, comments, error } = this.props
+
     return (
       <div>
-        {(error || !post) && <Redirect to="/notfound"/>}
+        {error && <Redirect to="/notfound"/>}
         {post ?
         <PostView
           post={post}
@@ -44,8 +39,11 @@ class Post extends Component {
   }
 }
 
-const mapStateToProps = ({ forum, errorMessage }) => ({ forum, errorMessage })
+const mapStateToProps = ({ postReducer, commentReducer, errorReducer }) => {
+  return { post: postReducer.post, comments: commentReducer.comments, error: errorReducer.error }
+}
 
 export default connect(
   mapStateToProps,
+  actions
 )(Post)

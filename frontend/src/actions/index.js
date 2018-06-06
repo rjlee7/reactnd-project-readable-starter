@@ -1,44 +1,27 @@
 import * as APIUtil from '../utils/api'
-
-export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES'
-export const RECEIVE_POSTS = 'RECEIVE_POSTS'
-export const RECEIVE_POST = 'RECEIVE_POST'
-export const RECEIVE_POST_FAIL = 'RECEIVE_POST_FAIL'
-export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS'
-export const ADD_POST = 'ADD_POST'
-export const ADD_COMMENT = 'ADD_COMMENT'
-export const UPDATE_POST = 'UPDATE_POST'
-export const UPDATE_COMMENT = 'UPDATE_COMMENT'
-export const VOTE_POST = 'VOTE_POST'
-export const VOTE_COMMENT = 'VOTE_COMMENT'
-export const DELETE_POST = 'DELETE_POST'
-export const DELETE_COMMENT = 'DELETE_COMMENT'
-export const SORT_POSTS_BY_NAME = 'SORT_POSTS_BY_NAME'
-export const SORT_POSTS_BY_DATE = 'SORT_POSTS_BY_DATE'
-export const SORT_POSTS_BY_VOTE = 'SORT_POSTS_BY_VOTE'
-export const RESET_ERROR_MESSAGE = 'RESET_ERROR_MESSAGE'
+import * as actionTypes from './Types'
 
 export const resetErrorMessage = () => ({
-    type: RESET_ERROR_MESSAGE
+    type: actionTypes.RESET_ERROR_MESSAGE
 })
 
 export function sortPostsByName (posts = []) {
   return {
-    type: SORT_POSTS_BY_NAME,
+    type: actionTypes.SORT_POSTS_BY_NAME,
     posts
   }
 }
 
 export function sortPostsByDate (posts = []) {
   return {
-    type: SORT_POSTS_BY_DATE,
+    type: actionTypes.SORT_POSTS_BY_DATE,
     posts
   }
 }
 
 export function sortPostsByVote (posts = []) {
   return {
-    type: SORT_POSTS_BY_VOTE,
+    type: actionTypes.SORT_POSTS_BY_VOTE,
     posts
   }
 }
@@ -46,7 +29,7 @@ export function sortPostsByVote (posts = []) {
 
 export function receiveCategories (categories = []) {
   return {
-    type: RECEIVE_CATEGORIES,
+    type: actionTypes.RECEIVE_CATEGORIES,
     categories
   }
 }
@@ -59,14 +42,14 @@ export const receiveCategoriesAsync = () => dispatch => (
 
 export function receivePost (post) {
   return {
-    type: RECEIVE_POST,
+    type: actionTypes.RECEIVE_POST,
     post
   }
 }
 
 export function receivePostFail (error) {
   return {
-    type: RECEIVE_POST_FAIL,
+    type: actionTypes.RECEIVE_POST_FAIL,
     error
   }
 }
@@ -75,7 +58,7 @@ export const receivePostAsync = (post_id) => dispatch => (
   APIUtil
     .getPost(post_id)
     .then(post => {
-      return dispatch(receivePost(post))
+      Object.keys(post).length ? dispatch(receivePost(post)) : dispatch(receivePostFail('Post does not exist.'))
     })
     .catch(error => {
       return dispatch(receivePostFail(error))
@@ -90,7 +73,7 @@ export const receivePostForCategoryAsync = (category, post_id) => dispatch => (
 
 export function receivePostsForCategory (posts = []) {
   return {
-    type: RECEIVE_POSTS,
+    type: actionTypes.RECEIVE_POSTS,
     posts
   }
 }
@@ -103,7 +86,7 @@ export const receivePostsForCategoryAsync = (category) => dispatch => (
 
 export function receivePosts (posts = []) {
   return {
-    type: RECEIVE_POSTS,
+    type: actionTypes.RECEIVE_POSTS,
     posts
   }
 }
@@ -116,7 +99,7 @@ export const receivePostsAsync = () => dispatch => (
 
 export function addPost (post) {
   return {
-    type: ADD_POST,
+    type: actionTypes.ADD_POST,
     post
   }
 }
@@ -129,7 +112,7 @@ export const addPostAsync = (timestamp, title, body, author, category, id) => di
 
 export function updatePost (post) {
   return {
-    type: UPDATE_POST,
+    type: actionTypes.UPDATE_POST,
     post
   }
 }
@@ -142,7 +125,7 @@ export const updatePostAsync = (id, title, body) => dispatch => (
 
 export function votePost (post) {
   return {
-    type: VOTE_POST,
+    type: actionTypes.VOTE_POST,
     post
   }
 }
@@ -155,7 +138,7 @@ export const votePostAsync = (id, vote) => dispatch => (
 
 export function deletePost (post) {
   return {
-    type: DELETE_POST,
+    type: actionTypes.DELETE_POST,
     post
   }
 }
@@ -168,7 +151,7 @@ export const deletePostAsync = (id) => dispatch => (
 
 export function receiveComments (comments = []) {
   return {
-    type: RECEIVE_COMMENTS,
+    type: actionTypes.RECEIVE_COMMENTS,
     comments
   }
 }
@@ -183,7 +166,7 @@ export const receiveCommentsAsync = (post_id) => dispatch => (
 
 export function addComment (comment) {
   return {
-    type: ADD_COMMENT,
+    type: actionTypes.ADD_COMMENT,
     comment
   }
 }
@@ -196,7 +179,7 @@ export const addCommentAsync = (id, timestamp, body, author, parentId) => dispat
 
 export function voteComment (comment) {
   return {
-    type: VOTE_COMMENT,
+    type: actionTypes.VOTE_COMMENT,
     comment
   }
 }
@@ -209,7 +192,7 @@ export const voteCommentAsync = (id, vote) => dispatch => (
 
 export function updateComment (comment) {
   return {
-    type: UPDATE_COMMENT,
+    type: actionTypes.UPDATE_COMMENT,
     comment
   }
 }
@@ -222,7 +205,7 @@ export const updateCommentAsync = (id, timestamp, body) => dispatch => (
 
 export function deleteComment (comment) {
   return {
-    type: DELETE_COMMENT,
+    type: actionTypes.DELETE_COMMENT,
     comment
   }
 }

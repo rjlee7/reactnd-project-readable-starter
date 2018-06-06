@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { addPostAsync } from '../actions'
 import NewPostView from '../components/NewPostView'
+import * as actions from '../actions'
 
 class NewPost extends Component {
 
   addPost = (timestamp, title, body, author, category, id) => {
-    this.props.dispatch(addPostAsync(timestamp, title, body, author, category, id))
+    this.props.addPostAsync(timestamp, title, body, author, category, id)
     this.props.history.push("/")
   }
 
@@ -17,8 +17,4 @@ class NewPost extends Component {
   }
 }
 
-const mapStateToProps = ({ forum }) => ({ forum })
-
-export default connect(
-  mapStateToProps,
-)(NewPost)
+export default connect(null, actions)(NewPost)

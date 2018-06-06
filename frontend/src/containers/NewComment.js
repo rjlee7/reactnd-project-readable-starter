@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { addCommentAsync } from '../actions'
 import { uuidv4 } from '../utils/helpers'
+import * as actions from '../actions'
 
 class NewComment extends Component {
   constructor(props) {
@@ -23,7 +23,7 @@ class NewComment extends Component {
   handleSubmit = (event) => {
     event.preventDefault()
     const { id, timestamp, body, author, parentId } = this.state;
-    this.props.dispatch(addCommentAsync(id, timestamp, body, author, parentId))
+    this.props.addCommentAsync(id, timestamp, body, author, parentId)
     this.setState({
       id: uuidv4(),
       author: '',
@@ -67,4 +67,4 @@ class NewComment extends Component {
   }
 }
 
-export default connect()(NewComment)
+export default connect(null, actions)(NewComment)

@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import NavbarView from '../components/NavbarView'
-import { receiveCategoriesAsync } from '../actions'
+import * as actions from '../actions'
 
 class Navbar extends Component {
   componentDidMount() {
-    this.props.dispatch(receiveCategoriesAsync())
+    this.props.receiveCategoriesAsync()
   }
 
   render() {
@@ -17,8 +17,9 @@ class Navbar extends Component {
   }
 }
 
-const mapStateToProps = ({ forum }) => ({ categories: forum.categories })
+const mapStateToProps = ({ categoryReducer }) => ({ categories: categoryReducer.categories })
 
 export default connect(
   mapStateToProps,
+  actions
 )(Navbar)

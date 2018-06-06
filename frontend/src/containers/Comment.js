@@ -1,10 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import {
-  deleteCommentAsync,
-  updateCommentAsync,
-  voteCommentAsync
-} from '../actions'
+import * as actions from '../actions'
 import { formatDate } from '../utils/helpers'
 import FaChevronUp from 'react-icons/lib/fa/chevron-up'
 import FaChevronDown from 'react-icons/lib/fa/chevron-down'
@@ -35,12 +31,12 @@ class Comment extends Component {
     const { body } = this.state
     if(event.key === 'Enter'){
       this.setState({ status: 'view' })
-      this.props.dispatch(updateCommentAsync(commentDetail.id, (new Date()).getTime(), body))
+      this.props.updateCommentAsync(commentDetail.id, (new Date()).getTime(), body)
     }
   }
 
   deleteComment(id) {
-    this.props.dispatch(deleteCommentAsync(id))
+    this.props.deleteCommentAsync(id)
   }
 
   render() {
@@ -84,13 +80,13 @@ class Comment extends Component {
             <button
               className="btn"
               type="button"
-              onClick={() => this.props.dispatch(voteCommentAsync(commentDetail.id, "upVote"))}>
+              onClick={() => this.props.voteCommentAsync(commentDetail.id, "upVote")}>
               <FaChevronUp/>
             </button>
             <button
               className="btn"
               type="button"
-              onClick={() => this.props.dispatch(voteCommentAsync(commentDetail.id, "upVote"))}>
+              onClick={() => this.props.voteCommentAsync(commentDetail.id, "upVote")}>
               <FaChevronDown/>
             </button>
           </div>
@@ -101,4 +97,4 @@ class Comment extends Component {
 }
 
 
-export default connect()(Comment)
+export default connect(null, actions)(Comment)

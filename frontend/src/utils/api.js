@@ -9,7 +9,6 @@ const headers = {
 export const getPostsForCategory = (category) =>
   fetch(`${api}/${category}/posts`, { headers })
   .then(res => {
-    console.log('res getPostsForCategory',res)
     if(res.status === 200) return res.json()
     else throw new Error(res.statusText)
   })
