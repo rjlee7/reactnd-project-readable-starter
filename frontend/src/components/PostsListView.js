@@ -6,44 +6,50 @@ import FaChevronDown from 'react-icons/lib/fa/chevron-down'
 import FaEdit from 'react-icons/lib/fa/edit'
 import FaTrash from 'react-icons/lib/fa/trash-o'
 import { Link } from 'react-router-dom'
-import * as actions from '../actions'
+import {
+  receivePostsForm,
+  startEditingPostsForm,
+  onEditingPostsForm,
+  onKeypressPostsForm,
+  onBlurPostsForm
+} from '../actions'
 
 class PostsListView extends Component {
   state = {}
 
   componentDidMount() {
-    const { postsForm, posts } = this.props
-    this.props.receivePostsForm(postsForm, posts)
+    const { posts } = this.props
+    this.props.dispatch(receivePostsForm({}, posts))
   }
 
   componentDidUpdate(prevProps) {
-    const { posts, postsForm } = this.props
+    const { posts } = this.props
     if (posts !== prevProps.posts) {
-      this.props.receivePostsForm(postsForm, posts)
+      this.props.dispatch(receivePostsForm({}, posts))
     }
   }
 
   startEditing(post) {
     const { postsForm } = this.props
-    this.props.startEditingPostsForm(postsForm, post)
+    this.props.dispatch(startEditingPostsForm(postsForm, post))
   }
 
   onChange(post, name, value) {
     const { postsForm } = this.props
-    this.props.onEditingPostsForm(postsForm, post, name, value)
+    this.props.dispatch(onEditingPostsForm(postsForm, post, name, value))
   }
 
   handleKeyPress = (event, post) => {
     const { postsForm, editPost } = this.props
     if(event.key === 'Enter'){
-      this.props.onKeypressPostsForm(postsForm, post)
+      this.props.dispatch(onKeypressPostsForm(postsForm, post))
       editPost(post.id, postsForm[post.id].title, postsForm[post.id].body)
     }
   }
 
   onBlur(event, post) {
     const { postsForm } = this.props
-    this.props.onBlurPostsForm(postsForm, post)
+    this.props.dispatch(onBlurPostsForm(postsForm, post))
   }
 
   render() {
@@ -143,4 +149,4 @@ class PostsListView extends Component {
 
 const mapStateToProps = ({ postsFormReducer }) => ({ postsForm: postsFormReducer.postsForm })
 
-export default connect(mapStateToProps, actions)(PostsListView)
+export default connect(mapStateToProps)(PostsListView)

@@ -230,7 +230,7 @@ export function deletePost (post) {
 export const deletePostAsync = (id) => dispatch => (
   APIUtil
     .deletePost(id)
-    .then(post => dispatch(deletePost(post)))
+    .then(res => dispatch(deletePost(res)))
 )
 
 export function receiveComments (comments = []) {

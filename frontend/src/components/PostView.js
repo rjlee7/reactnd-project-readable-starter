@@ -3,45 +3,51 @@ import { formatDate } from '../utils/helpers'
 import FaAngleDown from 'react-icons/lib/fa/angle-down'
 import Comment from '../containers/Comment'
 import NewComment from '../containers/NewComment'
-import * as actions from '../actions'
 import { connect } from 'react-redux'
+import {
+  receivePostForm,
+  startEditingPostForm,
+  onEditingPostForm,
+  onKeypressPostsForm,
+  onBlurPostsForm
+} from '../actions'
 
 class PostView extends Component {
   state = {}
 
   componentDidMount() {
-    const { postForm, post } = this.props
-    this.props.receivePostForm(postForm, post)
+    const { post } = this.props
+    this.props.dispatch(receivePostForm({}, post))
   }
 
   componentDidUpdate(prevProps) {
-    const { post, postForm } = this.props
+    const { post } = this.props
     if (post !== prevProps.post) {
-      this.props.receivePostForm(postForm, post)
+      this.props.dispatch(receivePostForm({}, post))
     }
   }
 
   startEditing(post) {
     const { postForm } = this.props
-    this.props.startEditingPostForm(postForm, post)
+    this.props.dispatch(startEditingPostForm(postForm, post))
   }
 
   onChange(post, name, value) {
     const { postForm } = this.props
-    this.props.onEditingPostForm(postForm, post, name, value)
+    this.props.dispatch(onEditingPostForm(postForm, post, name, value))
   }
 
   handleKeyPress = (event, post) => {
     const { postForm, editPost } = this.props
     if(event.key === 'Enter'){
-      this.props.onKeypressPostsForm(postForm, post)
+      this.props.dispatch(onKeypressPostsForm(postForm, post))
       editPost(post.id, postForm[post.id].title, postForm[post.id].body)
     }
   }
 
   onBlur(event, post) {
     const { postForm } = this.props
-    this.props.onBlurPostsForm(postForm, post)
+    this.props.dispatch(onBlurPostsForm(postForm, post))
   }
 
   render() {
@@ -129,4 +135,4 @@ class PostView extends Component {
 
 const mapStateToProps = ({ postFormReducer }) => ({ postForm: postFormReducer.postForm })
 
-export default connect(mapStateToProps, actions)(PostView)
+export default connect(mapStateToProps)(PostView)
