@@ -47,6 +47,48 @@ export function onBlurPostsForm (postsForm = {}, post = {}) {
   }
 }
 
+export function receivePostForm (postForm = {}, post = {}) {
+  return {
+    type: actionTypes.RECEIVE_POST_FORM,
+    postForm,
+    post
+  }
+}
+
+export function startEditingPostForm (postForm = {}, post = {}) {
+  return {
+    type: actionTypes.START_EDITING_POST_FORM,
+    postForm,
+    post
+  }
+}
+
+export function onEditingPostForm (postForm = {}, post = {}, name = '', value = '') {
+  return {
+    type: actionTypes.ON_EDITING_POST_FORM,
+    postForm,
+    post,
+    name,
+    value
+  }
+}
+
+export function onKeypressPostForm (postForm = {}, post = {}) {
+  return {
+    type: actionTypes.ON_KEYPRESS_POST_FORM,
+    postForm,
+    post
+  }
+}
+
+export function onBlurPostForm (postForm = {}, post = {}) {
+  return {
+    type: actionTypes.ON_BLUR_POST_FORM,
+    postForm,
+    post
+  }
+}
+
 export function sortPostsByName (posts = []) {
   return {
     type: actionTypes.SORT_POSTS_BY_NAME,

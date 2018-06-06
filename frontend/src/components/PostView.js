@@ -3,55 +3,62 @@ import { formatDate } from '../utils/helpers'
 import FaAngleDown from 'react-icons/lib/fa/angle-down'
 import Comment from '../containers/Comment'
 import NewComment from '../containers/NewComment'
+import * as actions from '../actions'
+import { connect } from 'react-redux'
 
 class PostView extends Component {
-  state = {
-    status: 'view',
-    title: null,
-    body: null
-  }
+  state = {}
 
   componentDidMount() {
-    const { post } = this.props
-    this.setState({
-      title: post.title,
-      body: post.body
-    })
+    const { postForm, post } = this.props
+    this.props.receivePostForm(postForm, post)
   }
 
-  startEditing() {
-    this.setState({
-      status: 'edit'
-    })
-  }
-
-  onChange(name, value) {
-    this.setState({
-      [name]: value
-    })
-  }
-
-  handleKeyPress = (event) => {
-    const { post, editPost } = this.props
-    const { title, body } = this.state
-    if(event.key === 'Enter'){
-      this.setState({
-        status: 'view'
-      })
-      editPost(post.id, title, body)
+  componentDidUpdate(prevProps) {
+    const { post, postForm } = this.props
+    if (post !== prevProps.post) {
+      this.props.receivePostForm(postForm, post)
     }
   }
 
+  startEditing(post) {
+    const { postForm } = this.props
+    this.props.startEditingPostForm(postForm, post)
+  }
+
+  onChange(post, name, value) {
+    const { postForm } = this.props
+    this.props.onEditingPostForm(postForm, post, name, value)
+  }
+
+  handleKeyPress = (event, post) => {
+    const { postForm, editPost } = this.props
+    if(event.key === 'Enter'){
+      this.props.onKeypressPostsForm(postForm, post)
+      editPost(post.id, postForm[post.id].title, postForm[post.id].body)
+    }
+  }
+
+  onBlur(event, post) {
+    const { postForm } = this.props
+    this.props.onBlurPostsForm(postForm, post)
+  }
+
   render() {
-    const { post, comments, deletePost } = this.props
-    const { status } = this.state
+    const {
+      post,
+      postForm,
+      comments,
+      deletePost
+    } = this.props
+
     return (
       <div className='post-table'>
         <div className="post-options">
           <button
             className="btn btn-secondary button-space"
             type="button"
-            onClick={() => this.startEditing()}>Edit Post</button>
+            onClick={() => this.startEditing(post)}>Edit Post</button>
           <button
             className="btn btn-default"
             type="button"
@@ -59,29 +66,29 @@ class PostView extends Component {
         </div>
         <div>
           <h3>{
-            status === 'view' ? post.title :
+            postForm[post.id] && postForm[post.id].status !== 'edit' ? post.title :
             <input
               type="text"
               className="input-text"
               defaultValue={post.title}
               name="title"
-              onChange={(e) => this.onChange(e.target.name, e.target.value)}
-              onBlur={() => this.setState({status: 'view'})}
-              onKeyPress={this.handleKeyPress}/>
+              onChange={(e) => this.onChange(post, e.target.name, e.target.value)}
+              onBlur={(e) => this.onBlur(e, post)}
+              onKeyPress={(e) => this.handleKeyPress(e, post)}/>
             }</h3>
           <p className="post-details">category: {post.category}</p>
           <p className="post-details">written by {post.author} on {formatDate(post.timestamp)}</p>
           <p className="post-details">votes: {post.voteScore}</p>
           <p className="post-details">{
-            status === 'view' ? post.body :
+            postForm[post.id] && postForm[post.id].status !== 'edit' ? post.body :
             <input
               type="text"
               className="input-text"
               defaultValue={post.body}
               name="body"
-              onChange={(e) => this.onChange(e.target.name, e.target.value)}
-              onBlur={() => this.setState({status: 'view'})}
-              onKeyPress={this.handleKeyPress}/>
+              onChange={(e) => this.onChange(post, e.target.name, e.target.value)}
+              onBlur={(e) => this.onBlur(e, post)}
+              onKeyPress={(e) => this.handleKeyPress(e, post)}/>
             }</p>
         </div>
         <div className="comment-block">
@@ -120,4 +127,6 @@ class PostView extends Component {
   }
 }
 
-export default PostView
+const mapStateToProps = ({ postFormReducer }) => ({ postForm: postFormReducer.postForm })
+
+export default connect(mapStateToProps, actions)(PostView)

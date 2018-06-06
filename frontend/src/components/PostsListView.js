@@ -11,6 +11,18 @@ import * as actions from '../actions'
 class PostsListView extends Component {
   state = {}
 
+  componentDidMount() {
+    const { postsForm, posts } = this.props
+    this.props.receivePostsForm(postsForm, posts)
+  }
+
+  componentDidUpdate(prevProps) {
+    const { posts, postsForm } = this.props
+    if (posts !== prevProps.posts) {
+      this.props.receivePostsForm(postsForm, posts)
+    }
+  }
+
   startEditing(post) {
     const { postsForm } = this.props
     this.props.startEditingPostsForm(postsForm, post)
@@ -32,18 +44,6 @@ class PostsListView extends Component {
   onBlur(event, post) {
     const { postsForm } = this.props
     this.props.onBlurPostsForm(postsForm, post)
-  }
-
-  componentDidMount() {
-    const { postsForm, posts } = this.props
-    this.props.receivePostsForm(postsForm, posts)
-  }
-
-  componentDidUpdate(prevProps) {
-    const { posts, postsForm } = this.props
-    if (posts !== prevProps.posts) {
-      this.props.receivePostsForm(postsForm, posts)
-    }
   }
 
   render() {
@@ -141,6 +141,6 @@ class PostsListView extends Component {
   }
 }
 
-const mapStateToProps = ({ formReducer }) => ({ postsForm: formReducer.postsForm })
+const mapStateToProps = ({ postsFormReducer }) => ({ postsForm: postsFormReducer.postsForm })
 
 export default connect(mapStateToProps, actions)(PostsListView)

@@ -8,10 +8,13 @@ import {
 
 const initialState = {
   postsForm : {},
-  posts: []
+  posts: [],
+  post: {},
+  name: '',
+  value: ''
 }
 
-function formReducer (state = initialState, action) {
+function postsFormReducer (state = initialState, action) {
   const { postsForm , posts, post, name, value } = action
   let postsFormObj = {...postsForm}
 
@@ -56,4 +59,4 @@ function formReducer (state = initialState, action) {
   }
 }
 
-export default formReducer
+export default postsFormReducer
